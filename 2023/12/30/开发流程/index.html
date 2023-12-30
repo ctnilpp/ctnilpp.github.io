@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>关于sender的思考 | Hexo</title>
+  <title>开发流程 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="发什么颠呢？ 这样有什么意义? 123456789101112131415public static EntityReference&lt;Session&gt; gateRef;public Session Gate&#123;    get    &#123;        Session session &#x3D; gateRef;        if (session &#x3D;&#x3D; null)">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于sender的思考">
-<meta property="og:url" content="http://example.com/%E5%85%B3%E4%BA%8Esender%E7%9A%84%E6%80%9D%E8%80%83/index.html">
+  <meta name="description" content="开发功能进度1.创建房间 ok2.获取房间列表 ok3.加入房间4.开始游戏5.人物移动测试 2023-12-30现在开发一个功能的步骤  写好协议 1 普通消息 2PRC消息 3路由消息 4地址消息 写好之后 要进行导出  写好服务端的逻辑，Handle和其他模块的调用  客户端的调用逻辑，网络  客户端的UI   例子比如我现在要开发 刷新大厅房间列表的功能  协议 这个是C2G的RPC，然后">
+<meta property="og:type" content="article">
+<meta property="og:title" content="开发流程">
+<meta property="og:url" content="http://example.com/2023/12/30/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="发什么颠呢？ 这样有什么意义? 123456789101112131415public static EntityReference&lt;Session&gt; gateRef;public Session Gate&#123;    get    &#123;        Session session &#x3D; gateRef;        if (session &#x3D;&#x3D; null)">
+<meta property="og:description" content="开发功能进度1.创建房间 ok2.获取房间列表 ok3.加入房间4.开始游戏5.人物移动测试 2023-12-30现在开发一个功能的步骤  写好协议 1 普通消息 2PRC消息 3路由消息 4地址消息 写好之后 要进行导出  写好服务端的逻辑，Handle和其他模块的调用  客户端的调用逻辑，网络  客户端的UI   例子比如我现在要开发 刷新大厅房间列表的功能  协议 这个是C2G的RPC，然后">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-12-28T17:24:11.000Z">
-<meta property="article:modified_time" content="2023-12-28T17:28:31.351Z">
+<meta property="article:published_time" content="2023-12-30T13:28:40.000Z">
+<meta property="article:modified_time" content="2023-12-30T14:05:47.969Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -71,10 +71,10 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="page-" class="h-entry article article-type-page" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-开发流程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/%E5%85%B3%E4%BA%8Esender%E7%9A%84%E6%80%9D%E8%80%83/index.html" class="article-date">
-  <time class="dt-published" datetime="2023-12-28T17:24:11.000Z" itemprop="datePublished">2023-12-29</time>
+    <a href="/2023/12/30/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" class="article-date">
+  <time class="dt-published" datetime="2023-12-30T13:28:40.000Z" itemprop="datePublished">2023-12-30</time>
 </a>
     
   </div>
@@ -85,7 +85,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      关于sender的思考
+      开发流程
     </h1>
   
 
@@ -93,13 +93,30 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>发什么颠呢？</p>
-<h2 id="-1"><a href="#-1" class="headerlink" title=""></a></h2><p>这样有什么意义?</p>
-<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> EntityReference&lt;Session&gt; gateRef;</span><br><span class="line"><span class="keyword">public</span> Session Gate</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">get</span></span><br><span class="line">    &#123;</span><br><span class="line">        Session session = gateRef;</span><br><span class="line">        <span class="keyword">if</span> (session == <span class="literal">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            GateScene.CreateSession(GateAdress, NetworkProtocolType.KCP,</span><br><span class="line">                OnGateConnected, OnGateConnectFail, <span class="literal">null</span>);</span><br><span class="line">            <span class="keyword">return</span> gateRef = GateScene.Session;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> session;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h3 id="开发功能进度"><a href="#开发功能进度" class="headerlink" title="开发功能进度"></a>开发功能进度</h3><p>1.创建房间 ok<br>2.获取房间列表 ok<br>3.加入房间<br>4.开始游戏<br>5.人物移动测试</p>
+<h3 id="2023-12-30"><a href="#2023-12-30" class="headerlink" title="2023-12-30"></a>2023-12-30</h3><p>现在开发一个功能的步骤</p>
+<ol>
+<li><p>写好协议 1 普通消息 2PRC消息 3路由消息 4地址消息 写好之后 要进行导出</p>
+</li>
+<li><p>写好服务端的逻辑，Handle和其他模块的调用</p>
+</li>
+<li><p>客户端的调用逻辑，网络</p>
+</li>
+<li><p>客户端的UI</p>
+</li>
+</ol>
+<p>例子<br>比如我现在要开发 刷新大厅房间列表的功能</p>
+<ol>
+<li>协议 这个是C2G的RPC，然后还有一个路由方法，接着最后返回RoomInfo给客户端，按照这个思路，要定义四个协议,写两个handle</li>
+</ol>
+<p>2.消息模板</p>
+<p>内部路由<br> var res &#x3D; (GR2G_CreateGameRoomRouteResponse)await MessageHelper.CallInnerRoute(session.Scene, gateSceneConfig.EntityId, new GR2G_CreateGameRoomRouteResponse()<br> {</p>
+<p> });<br> Log.Debug(res.ErrorCode + “ “ + res.Message);</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/%E5%85%B3%E4%BA%8Esender%E7%9A%84%E6%80%9D%E8%80%83/index.html" data-id="clqs5007y0002xsucfcwada1g" data-title="关于sender的思考" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/12/30/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" data-id="clqs5007y0003xsuc0alwc8bx" data-title="开发流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -107,6 +124,16 @@
   </div>
   
     
+<nav id="article-nav">
+  
+  
+    <a href="/2023/12/29/C-%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86%E5%BE%85%E6%95%B4%E7%90%86%E7%AE%B1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">C# 基本知识待整理箱</div>
+    </a>
+  
+</nav>
+
   
 </article>
 
