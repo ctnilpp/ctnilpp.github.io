@@ -6,15 +6,15 @@
   
   <title>开发流程 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="开发功能进度1.创建房间 ok2.获取房间列表 ok3.加入房间4.开始游戏5.人物移动测试 2023-12-30现在开发一个功能的步骤  写好协议 1 普通消息 2PRC消息 3路由消息 4地址消息 写好之后 要进行导出  写好服务端的逻辑，Handle和其他模块的调用  客户端的调用逻辑，网络  客户端的UI   例子比如我现在要开发 刷新大厅房间列表的功能  协议 这个是C2G的RPC，然后">
+  <meta name="description" content="开发功能进度1.创建房间 ok2.获取房间列表 ok3.加入房间 ok4.开始游戏5.人物移动测试 2023-12-30现在开发一个功能的步骤  写好协议 1 普通消息 2PRC消息 3路由消息 4地址消息 写好之后 要进行导出  写好服务端的逻辑，Handle和其他模块的调用  客户端的调用逻辑，网络  客户端的UI   例子比如我现在要开发 刷新大厅房间列表的功能  协议 这个是C2G的RPC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="开发流程">
 <meta property="og:url" content="http://example.com/2023/12/30/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="开发功能进度1.创建房间 ok2.获取房间列表 ok3.加入房间4.开始游戏5.人物移动测试 2023-12-30现在开发一个功能的步骤  写好协议 1 普通消息 2PRC消息 3路由消息 4地址消息 写好之后 要进行导出  写好服务端的逻辑，Handle和其他模块的调用  客户端的调用逻辑，网络  客户端的UI   例子比如我现在要开发 刷新大厅房间列表的功能  协议 这个是C2G的RPC，然后">
+<meta property="og:description" content="开发功能进度1.创建房间 ok2.获取房间列表 ok3.加入房间 ok4.开始游戏5.人物移动测试 2023-12-30现在开发一个功能的步骤  写好协议 1 普通消息 2PRC消息 3路由消息 4地址消息 写好之后 要进行导出  写好服务端的逻辑，Handle和其他模块的调用  客户端的调用逻辑，网络  客户端的UI   例子比如我现在要开发 刷新大厅房间列表的功能  协议 这个是C2G的RPC">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-12-30T13:28:40.000Z">
-<meta property="article:modified_time" content="2023-12-30T14:05:47.969Z">
+<meta property="article:modified_time" content="2024-01-01T10:50:15.513Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -93,7 +93,7 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="开发功能进度"><a href="#开发功能进度" class="headerlink" title="开发功能进度"></a>开发功能进度</h3><p>1.创建房间 ok<br>2.获取房间列表 ok<br>3.加入房间<br>4.开始游戏<br>5.人物移动测试</p>
+        <h3 id="开发功能进度"><a href="#开发功能进度" class="headerlink" title="开发功能进度"></a>开发功能进度</h3><p>1.创建房间 ok<br>2.获取房间列表 ok<br>3.加入房间 ok<br>4.开始游戏<br>5.人物移动测试</p>
 <h3 id="2023-12-30"><a href="#2023-12-30" class="headerlink" title="2023-12-30"></a>2023-12-30</h3><p>现在开发一个功能的步骤</p>
 <ol>
 <li><p>写好协议 1 普通消息 2PRC消息 3路由消息 4地址消息 写好之后 要进行导出</p>
@@ -112,6 +112,9 @@
 <p>2.消息模板</p>
 <p>内部路由<br> var res &#x3D; (GR2G_CreateGameRoomRouteResponse)await MessageHelper.CallInnerRoute(session.Scene, gateSceneConfig.EntityId, new GR2G_CreateGameRoomRouteResponse()<br> {</p>
 <p> });<br> Log.Debug(res.ErrorCode + “ “ + res.Message);</p>
+<ol start="3">
+<li>关于广播协议怎么写<br>首先，要定好协议，一般是地址协议，S2C<br>接着服务器，在要发送的地方，创建协议对象，然后进行发送<br>这里Fantasy已经提供了MessageHelper.SendInnerRoute这个函数，把scene, Entity的运行时id，以及广播消息传进去即可。</li>
+</ol>
 
       
     </div>
@@ -125,6 +128,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2024/01/01/p1228/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          p1228
+        
+      </div>
+    </a>
   
   
     <a href="/2023/12/29/C-%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86%E5%BE%85%E6%95%B4%E7%90%86%E7%AE%B1/" id="article-nav-older" class="article-nav-link-wrap">
@@ -154,7 +166,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
     </div>
   </div>
 
@@ -165,6 +177,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2024/01/01/p1228/">p1228</a>
+          </li>
         
           <li>
             <a href="/2023/12/30/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/">开发流程</a>
@@ -191,7 +207,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2023 John Doe<br>
+      &copy; 2024 John Doe<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

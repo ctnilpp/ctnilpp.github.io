@@ -69,6 +69,45 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-p1228" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/01/01/p1228/" class="article-date">
+  <time class="dt-published" datetime="2024-01-01T01:52:33.000Z" itemprop="datePublished">2024-01-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/01/01/p1228/">p1228</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>想了不算久，我的思路是这样的<br>1.先从中心点开始递归至四周，中心点填入方块的根据，是以空缺的点位于中心点的四个方位<br>的哪一个地方来判断的，那么四个方位就对应了四个方块。填入后，就可以通过递归，就可以<br>得到四位方位中位上的四个中心点，接着继续进行递归。递归的条件，仍然是看四个方位上是否<br>有空缺点位，但是，这里有一个要注意的是，递归需要传入上一次递归空缺的点位，这样下一次<br>递归才能够进行判断。<br>然后写代码就可以了</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/01/01/p1228/" data-id="clqusunuq0000iguc9bo7auma" data-title="p1228" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-开发流程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/12/30/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" class="article-date">
@@ -91,7 +130,7 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="开发功能进度"><a href="#开发功能进度" class="headerlink" title="开发功能进度"></a>开发功能进度</h3><p>1.创建房间 ok<br>2.获取房间列表 ok<br>3.加入房间<br>4.开始游戏<br>5.人物移动测试</p>
+        <h3 id="开发功能进度"><a href="#开发功能进度" class="headerlink" title="开发功能进度"></a>开发功能进度</h3><p>1.创建房间 ok<br>2.获取房间列表 ok<br>3.加入房间 ok<br>4.开始游戏<br>5.人物移动测试</p>
 <h3 id="2023-12-30"><a href="#2023-12-30" class="headerlink" title="2023-12-30"></a>2023-12-30</h3><p>现在开发一个功能的步骤</p>
 <ol>
 <li><p>写好协议 1 普通消息 2PRC消息 3路由消息 4地址消息 写好之后 要进行导出</p>
@@ -110,6 +149,9 @@
 <p>2.消息模板</p>
 <p>内部路由<br> var res &#x3D; (GR2G_CreateGameRoomRouteResponse)await MessageHelper.CallInnerRoute(session.Scene, gateSceneConfig.EntityId, new GR2G_CreateGameRoomRouteResponse()<br> {</p>
 <p> });<br> Log.Debug(res.ErrorCode + “ “ + res.Message);</p>
+<ol start="3">
+<li>关于广播协议怎么写<br>首先，要定好协议，一般是地址协议，S2C<br>接着服务器，在要发送的地方，创建协议对象，然后进行发送<br>这里Fantasy已经提供了MessageHelper.SendInnerRoute这个函数，把scene, Entity的运行时id，以及广播消息传进去即可。</li>
+</ol>
 
       
     </div>
@@ -254,7 +296,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
     </div>
   </div>
 
@@ -265,6 +307,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2024/01/01/p1228/">p1228</a>
+          </li>
         
           <li>
             <a href="/2023/12/30/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/">开发流程</a>
@@ -291,7 +337,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2023 John Doe<br>
+      &copy; 2024 John Doe<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
