@@ -4,15 +4,22 @@
   <meta charset="utf-8">
   
   
-  <title>Hexo</title>
+  <title>自己写物理系统相关问题 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="在物体重叠之后，希望其中一个物体会被挤出。如图1,2所示   那么其实这个问题可以转化为，求重叠的部分，然后把重叠部分较小的那个轴作为分离向量 所以解决步骤为： 1.计算出x,y轴重叠的大小 2.如果有重叠，计算出重叠部分较小的那个轴 3.确定分离的方向 12345678910111213141516171819&#x2F;&#x2F;1 计算出x,y轴重叠的大小float overlapX &#x3D; Mathf.Min(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自己写物理系统相关问题">
+<meta property="og:url" content="http://example.com/2024/02/27/%E8%87%AA%E5%B7%B1%E5%86%99%E7%89%A9%E7%90%86%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在物体重叠之后，希望其中一个物体会被挤出。如图1,2所示   那么其实这个问题可以转化为，求重叠的部分，然后把重叠部分较小的那个轴作为分离向量 所以解决步骤为： 1.计算出x,y轴重叠的大小 2.如果有重叠，计算出重叠部分较小的那个轴 3.确定分离的方向 12345678910111213141516171819&#x2F;&#x2F;1 计算出x,y轴重叠的大小float overlapX &#x3D; Mathf.Min(">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/.com//%E6%8C%A4%E5%87%BA1.png">
+<meta property="og:image" content="http://example.com/.com//%E6%8C%A4%E5%87%BA2.png">
+<meta property="article:published_time" content="2024-02-27T02:39:10.000Z">
+<meta property="article:modified_time" content="2024-02-27T02:58:00.184Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/.com//%E6%8C%A4%E5%87%BA1.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -67,85 +74,7 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-test" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/02/27/test/" class="article-date">
-  <time class="dt-published" datetime="2024-02-27T02:59:14.000Z" itemprop="datePublished">2024-02-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/02/27/test/">test</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <img src="/.com//02/27/test/overlap1.png" class title="example">
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/02/27/test/" data-id="clt3scjmn0000dcuc87al0tmz" data-title="test" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-项目计划" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/02/27/%E9%A1%B9%E7%9B%AE%E8%AE%A1%E5%88%92/" class="article-date">
-  <time class="dt-published" datetime="2024-02-27T02:56:55.000Z" itemprop="datePublished">2024-02-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/02/27/%E9%A1%B9%E7%9B%AE%E8%AE%A1%E5%88%92/">项目计划</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/02/27/%E9%A1%B9%E7%9B%AE%E8%AE%A1%E5%88%92/" data-id="clt3scjmt0002dcucgpp7h0so" data-title="项目计划" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-自己写物理系统相关问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-自己写物理系统相关问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/02/27/%E8%87%AA%E5%B7%B1%E5%86%99%E7%89%A9%E7%90%86%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" class="article-date">
   <time class="dt-published" datetime="2024-02-27T02:39:10.000Z" itemprop="datePublished">2024-02-27</time>
@@ -158,8 +87,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/02/27/%E8%87%AA%E5%B7%B1%E5%86%99%E7%89%A9%E7%90%86%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/">自己写物理系统相关问题</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      自己写物理系统相关问题
     </h1>
   
 
@@ -188,11 +117,23 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
+  
+    <a href="/2024/02/27/%E9%A1%B9%E7%9B%AE%E8%AE%A1%E5%88%92/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          项目计划
+        
+      </div>
+    </a>
+  
+  
+</nav>
 
   
+</article>
 
 
 </section>
