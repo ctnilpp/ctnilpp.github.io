@@ -6,15 +6,15 @@
   
   <title>开发流程 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="开发功能进度1.创建房间 ok2.获取房间列表 ok3.加入房间 ok4.开始游戏5.人物移动测试 2023-12-30现在开发一个功能的步骤  写好协议 1 普通消息 2PRC消息 3路由消息 4地址消息 写好之后 要进行导出  写好服务端的逻辑，Handle和其他模块的调用  客户端的调用逻辑，网络  客户端的UI   例子比如我现在要开发 刷新大厅房间列表的功能  协议 这个是C2G的RPC">
+  <meta name="description" content="开发功能进度1.创建房间 ok2.获取房间列表 ok3.加入房间 ok4.开始游戏 ok5.人物移动测试 ok6.人物与工具箱的交互    1.砧板 ok    2.烧炉 ok    3.拿材料 ok    4.盘子 ok    5.洗盘子    6.空桌子 ok    7.垃圾桶 ok7.人物与顾客的交互 ok8.人物与桌子的交互 ok9.人物技能10.时间和金钱的变化，以及结束游戏对局和显示结">
 <meta property="og:type" content="article">
 <meta property="og:title" content="开发流程">
 <meta property="og:url" content="http://example.com/2023/12/30/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="开发功能进度1.创建房间 ok2.获取房间列表 ok3.加入房间 ok4.开始游戏5.人物移动测试 2023-12-30现在开发一个功能的步骤  写好协议 1 普通消息 2PRC消息 3路由消息 4地址消息 写好之后 要进行导出  写好服务端的逻辑，Handle和其他模块的调用  客户端的调用逻辑，网络  客户端的UI   例子比如我现在要开发 刷新大厅房间列表的功能  协议 这个是C2G的RPC">
+<meta property="og:description" content="开发功能进度1.创建房间 ok2.获取房间列表 ok3.加入房间 ok4.开始游戏 ok5.人物移动测试 ok6.人物与工具箱的交互    1.砧板 ok    2.烧炉 ok    3.拿材料 ok    4.盘子 ok    5.洗盘子    6.空桌子 ok    7.垃圾桶 ok7.人物与顾客的交互 ok8.人物与桌子的交互 ok9.人物技能10.时间和金钱的变化，以及结束游戏对局和显示结">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-12-30T13:28:40.000Z">
-<meta property="article:modified_time" content="2024-01-01T10:50:15.513Z">
+<meta property="article:modified_time" content="2024-01-17T03:30:54.256Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -93,7 +93,7 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="开发功能进度"><a href="#开发功能进度" class="headerlink" title="开发功能进度"></a>开发功能进度</h3><p>1.创建房间 ok<br>2.获取房间列表 ok<br>3.加入房间 ok<br>4.开始游戏<br>5.人物移动测试</p>
+        <h3 id="开发功能进度"><a href="#开发功能进度" class="headerlink" title="开发功能进度"></a>开发功能进度</h3><p>1.创建房间 ok<br>2.获取房间列表 ok<br>3.加入房间 ok<br>4.开始游戏 ok<br>5.人物移动测试 ok<br>6.人物与工具箱的交互<br>    1.砧板 ok<br>    2.烧炉 ok<br>    3.拿材料 ok<br>    4.盘子 ok<br>    5.洗盘子<br>    6.空桌子 ok<br>    7.垃圾桶 ok<br>7.人物与顾客的交互 ok<br>8.人物与桌子的交互 ok<br>9.人物技能<br>10.时间和金钱的变化，以及结束游戏对局和显示结算界面<br>11.传送 ok<br>12.进食<br>13.拿脏盘子</p>
 <h3 id="2023-12-30"><a href="#2023-12-30" class="headerlink" title="2023-12-30"></a>2023-12-30</h3><p>现在开发一个功能的步骤</p>
 <ol>
 <li><p>写好协议 1 普通消息 2PRC消息 3路由消息 4地址消息 写好之后 要进行导出</p>
@@ -115,6 +115,10 @@
 <ol start="3">
 <li>关于广播协议怎么写<br>首先，要定好协议，一般是地址协议，S2C<br>接着服务器，在要发送的地方，创建协议对象，然后进行发送<br>这里Fantasy已经提供了MessageHelper.SendInnerRoute这个函数，把scene, Entity的运行时id，以及广播消息传进去即可。</li>
 </ol>
+<h3 id="2024-1-1"><a href="#2024-1-1" class="headerlink" title="2024-1-1"></a>2024-1-1</h3><ol>
+<li>添加新Scene和Server的步骤<br>首先在ServerExcel表创建新的Server<br>然后在SceneExcel表创建新的Scene,并且ServerId一项中填上刚才新添加的ServerId<br>有需要要自己添加新的SceneType<br>然后在OnCreateScene.cs文件中，添加相应的初始化组件</li>
+</ol>
+<h3 id="2024-1-12"><a href="#2024-1-12" class="headerlink" title="2024-1-12"></a>2024-1-12</h3><p>1.烧炉烧菜的逻辑放到哪里去？</p>
 
       
     </div>
@@ -179,19 +183,23 @@
       <ul>
         
           <li>
-            <a href="/2024/01/01/p1228/">p1228</a>
+            <a href="/2024/01/18/leetcode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/">leetcode刷题日记</a>
           </li>
         
           <li>
-            <a href="/2023/12/30/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/">开发流程</a>
+            <a href="/2024/01/15/%E6%AD%A3%E7%BB%8F%E4%BA%BA%E8%B0%81%E5%86%99%E6%97%A5%E8%AE%B0/">正经人谁写日记</a>
           </li>
         
           <li>
-            <a href="/2023/12/29/C-%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86%E5%BE%85%E6%95%B4%E7%90%86%E7%AE%B1/">C# 基本知识待整理箱</a>
+            <a href="/2024/01/10/%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/">开发日志</a>
           </li>
         
           <li>
-            <a href="/2023/12/29/%E5%85%B3%E4%BA%8Esender%E7%9A%84%E6%80%9D%E8%80%83/">关于sender的思考</a>
+            <a href="/2024/01/02/leetcode466%E7%BB%9F%E8%AE%A1%E9%87%8D%E5%A4%8D%E4%B8%AA%E6%95%B0/">leetcode466统计重复个数</a>
+          </li>
+        
+          <li>
+            <a href="/2024/01/02/%E5%B8%A7%E5%90%8C%E6%AD%A5%E7%9B%B8%E5%85%B3%E7%9A%84%E5%AD%A6%E4%B9%A0/">帧同步相关的学习</a>
           </li>
         
       </ul>
