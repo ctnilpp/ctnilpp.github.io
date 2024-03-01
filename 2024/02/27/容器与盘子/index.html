@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>项目个人计划安排 | Hexo</title>
+  <title>容器与盘子 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="定点数导入 √ 基于定点数的物理系统测试与使用 √ 游戏玩法的重新设计与思考 √ 碰撞分为实体碰撞和触发器碰撞 √ 碰撞三个消息 进入 执行中 离开 √ 玩家需要弄一个容器在身上，接收食物，盘子 √ 实体有父子之分，父移动，子也要移动，子有相对位置的概念 √ 装置，以及装置的碰撞，还有尝试写一个冰箱先。">
+  <meta name="description" content="首先现在有食物，盘子，玩家的手 玩家的手可以装食物和盘子 盘子可以装食物 无论手还是盘子，都只可以装一个东西。 那说明，手和盘子就可以抽象出一个容器接口。 容器接口有以下功能  添加可装载物 得到可装载物 去掉可装载物  可见盘子十分特殊，它既是可装载物，又是容器。那要怎么定义呢？ 玩家主动和装置交互，并且交互的时候，给出用哪个容器，那么判断就是由玩家 主动发起进行判断。那么以后拓展的逻辑也是要加">
 <meta property="og:type" content="article">
-<meta property="og:title" content="项目个人计划安排">
-<meta property="og:url" content="http://example.com/2024/02/27/%E9%A1%B9%E7%9B%AE%E8%BF%9B%E5%BA%A6/index.html">
+<meta property="og:title" content="容器与盘子">
+<meta property="og:url" content="http://example.com/2024/02/27/%E5%AE%B9%E5%99%A8%E4%B8%8E%E7%9B%98%E5%AD%90/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="定点数导入 √ 基于定点数的物理系统测试与使用 √ 游戏玩法的重新设计与思考 √ 碰撞分为实体碰撞和触发器碰撞 √ 碰撞三个消息 进入 执行中 离开 √ 玩家需要弄一个容器在身上，接收食物，盘子 √ 实体有父子之分，父移动，子也要移动，子有相对位置的概念 √ 装置，以及装置的碰撞，还有尝试写一个冰箱先。">
+<meta property="og:description" content="首先现在有食物，盘子，玩家的手 玩家的手可以装食物和盘子 盘子可以装食物 无论手还是盘子，都只可以装一个东西。 那说明，手和盘子就可以抽象出一个容器接口。 容器接口有以下功能  添加可装载物 得到可装载物 去掉可装载物  可见盘子十分特殊，它既是可装载物，又是容器。那要怎么定义呢？ 玩家主动和装置交互，并且交互的时候，给出用哪个容器，那么判断就是由玩家 主动发起进行判断。那么以后拓展的逻辑也是要加">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-02-27T03:33:47.000Z">
-<meta property="article:modified_time" content="2024-02-28T09:48:17.416Z">
+<meta property="article:published_time" content="2024-02-27T15:59:19.000Z">
+<meta property="article:modified_time" content="2024-02-29T08:56:44.540Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -71,10 +71,10 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-项目进度" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-容器与盘子" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2024/02/27/%E9%A1%B9%E7%9B%AE%E8%BF%9B%E5%BA%A6/" class="article-date">
-  <time class="dt-published" datetime="2024-02-27T03:33:47.000Z" itemprop="datePublished">2024-02-27</time>
+    <a href="/2024/02/27/%E5%AE%B9%E5%99%A8%E4%B8%8E%E7%9B%98%E5%AD%90/" class="article-date">
+  <time class="dt-published" datetime="2024-02-27T15:59:19.000Z" itemprop="datePublished">2024-02-27</time>
 </a>
     
   </div>
@@ -85,7 +85,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      项目个人计划安排
+      容器与盘子
     </h1>
   
 
@@ -93,21 +93,25 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <ol>
-<li>定点数导入 √</li>
-<li>基于定点数的物理系统测试与使用 √</li>
-<li>游戏玩法的重新设计与思考 √</li>
-<li>碰撞分为实体碰撞和触发器碰撞 √</li>
-<li>碰撞三个消息 进入 执行中 离开 √</li>
-<li>玩家需要弄一个容器在身上，接收食物，盘子 √</li>
-<li>实体有父子之分，父移动，子也要移动，子有相对位置的概念 √</li>
-<li>装置，以及装置的碰撞，还有尝试写一个冰箱先。</li>
+        <p>首先现在有食物，盘子，玩家的手</p>
+<p>玩家的手可以装食物和盘子</p>
+<p>盘子可以装食物</p>
+<p>无论手还是盘子，都只可以装一个东西。</p>
+<p>那说明，手和盘子就可以抽象出一个容器接口。</p>
+<p>容器接口有以下功能</p>
+<ol>
+<li>添加可装载物</li>
+<li>得到可装载物</li>
+<li>去掉可装载物</li>
 </ol>
+<p>可见盘子十分特殊，它既是可装载物，又是容器。那要怎么定义呢？</p>
+<p>玩家主动和装置交互，并且交互的时候，给出用哪个容器，那么判断就是由玩家</p>
+<p>主动发起进行判断。那么以后拓展的逻辑也是要加到玩家身上的。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/02/27/%E9%A1%B9%E7%9B%AE%E8%BF%9B%E5%BA%A6/" data-id="clt3tnpd70001fouc1zgn3qpa" data-title="项目个人计划安排" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/02/27/%E5%AE%B9%E5%99%A8%E4%B8%8E%E7%9B%98%E5%AD%90/" data-id="clt864oum0005n4uc60n4249a" data-title="容器与盘子" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -117,19 +121,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2024/02/27/%E4%BD%93%E9%AA%8C%E5%BC%95%E6%93%8E%E8%AF%BB%E5%90%8E%E6%84%9F/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2024/02/29/UI%E7%9B%B8%E6%9C%BA%E8%A2%AB%E4%B8%BB%E7%9B%B8%E6%9C%BA%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          体验引擎读后感
+          UI相机被主相机覆盖问题
         
       </div>
     </a>
   
   
-    <a href="/2024/02/27/%E7%89%A9%E7%90%86%E7%9A%84%E7%AE%80%E5%8D%95%E6%8C%A4%E5%87%BA/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2024/02/27/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">物理的简单挤出</div>
+      <div class="article-nav-title">游戏设计</div>
     </a>
   
 </nav>

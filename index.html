@@ -69,6 +69,337 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-如何进行编辑器的更新" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/03/01/%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E6%9B%B4%E6%96%B0/" class="article-date">
+  <time class="dt-published" datetime="2024-03-01T04:41:00.000Z" itemprop="datePublished">2024-03-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/03/01/%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E6%9B%B4%E6%96%B0/">如何进行编辑器的更新</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240301124023.png"></p>
+<p>其中skillCharConfig是记录窗口组件的对象，在其中实现OnUpdate()方法并调用即可。</p>
+<p>同时要注意的是Focus()函数，可以使窗口的数据立马进行刷新，以防止出现数据更新卡顿显示的问题。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/03/01/%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E6%9B%B4%E6%96%B0/" data-id="clt864oul0004n4uc93ll2sum" data-title="如何进行编辑器的更新" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-创建技能编辑器" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/03/01/%E5%88%9B%E5%BB%BA%E6%8A%80%E8%83%BD%E7%BC%96%E8%BE%91%E5%99%A8/" class="article-date">
+  <time class="dt-published" datetime="2024-03-01T01:13:40.000Z" itemprop="datePublished">2024-03-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/03/01/%E5%88%9B%E5%BB%BA%E6%8A%80%E8%83%BD%E7%BC%96%E8%BE%91%E5%99%A8/">创建技能编辑器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SkillEditorWindow</span> : <span class="title">OdinEditorWindow</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">MenuItem(<span class="string">&quot;Skill/技能编辑器&quot;</span>)</span>]</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SkillEditorWindow <span class="title">ShowWindow</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> GetWindowWithRect&lt;SkillEditorWindow&gt;(<span class="keyword">new</span> Rect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">1000</span>, <span class="number">600</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以创建出窗口，原理就是使用Odin的GetWindowWithRectAPI，创建出该类的一个窗体对象</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/03/01/%E5%88%9B%E5%BB%BA%E6%8A%80%E8%83%BD%E7%BC%96%E8%BE%91%E5%99%A8/" data-id="clt864ouk0002n4uccbj6ec3u" data-title="创建技能编辑器" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-为什么要用AB包" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/29/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8AB%E5%8C%85/" class="article-date">
+  <time class="dt-published" datetime="2024-02-29T12:50:33.000Z" itemprop="datePublished">2024-02-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/29/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8AB%E5%8C%85/">为什么要用AB包?</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240229204929.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/29/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8AB%E5%8C%85/" data-id="clt864oui0001n4uc28t6e3en" data-title="为什么要用AB包?" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-UI相机被主相机覆盖问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/29/UI%E7%9B%B8%E6%9C%BA%E8%A2%AB%E4%B8%BB%E7%9B%B8%E6%9C%BA%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98/" class="article-date">
+  <time class="dt-published" datetime="2024-02-29T10:02:45.000Z" itemprop="datePublished">2024-02-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/29/UI%E7%9B%B8%E6%9C%BA%E8%A2%AB%E4%B8%BB%E7%9B%B8%E6%9C%BA%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98/">UI相机被主相机覆盖问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240229180211.png">、</p>
+<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240229180322.png"></p>
+<p>注意，Depth数值越大，越先被渲染，因而UICamera的Depth值要比主相机的要大</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/29/UI%E7%9B%B8%E6%9C%BA%E8%A2%AB%E4%B8%BB%E7%9B%B8%E6%9C%BA%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98/" data-id="clt864oue0000n4uc94fx6gvy" data-title="UI相机被主相机覆盖问题" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-容器与盘子" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/27/%E5%AE%B9%E5%99%A8%E4%B8%8E%E7%9B%98%E5%AD%90/" class="article-date">
+  <time class="dt-published" datetime="2024-02-27T15:59:19.000Z" itemprop="datePublished">2024-02-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/27/%E5%AE%B9%E5%99%A8%E4%B8%8E%E7%9B%98%E5%AD%90/">容器与盘子</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>首先现在有食物，盘子，玩家的手</p>
+<p>玩家的手可以装食物和盘子</p>
+<p>盘子可以装食物</p>
+<p>无论手还是盘子，都只可以装一个东西。</p>
+<p>那说明，手和盘子就可以抽象出一个容器接口。</p>
+<p>容器接口有以下功能</p>
+<ol>
+<li>添加可装载物</li>
+<li>得到可装载物</li>
+<li>去掉可装载物</li>
+</ol>
+<p>可见盘子十分特殊，它既是可装载物，又是容器。那要怎么定义呢？</p>
+<p>玩家主动和装置交互，并且交互的时候，给出用哪个容器，那么判断就是由玩家</p>
+<p>主动发起进行判断。那么以后拓展的逻辑也是要加到玩家身上的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/27/%E5%AE%B9%E5%99%A8%E4%B8%8E%E7%9B%98%E5%AD%90/" data-id="clt864oum0005n4uc60n4249a" data-title="容器与盘子" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-游戏设计" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/27/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/" class="article-date">
+  <time class="dt-published" datetime="2024-02-27T08:58:45.000Z" itemprop="datePublished">2024-02-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/27/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/">游戏设计</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>游戏机制</p>
+<p>1.玩家交互</p>
+<p>只有两个按钮 GRAD 和 USE</p>
+<p>2.实体</p>
+<p>​	1.干员</p>
+<p>​	2.装置</p>
+<p>​	3.桌子</p>
+<p>游戏事件</p>
+<p>情感</p>
+<p>体验</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/27/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/" data-id="clt864oun0006n4ucgid8cwix" data-title="游戏设计" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-体验引擎读后感" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/27/%E4%BD%93%E9%AA%8C%E5%BC%95%E6%93%8E%E8%AF%BB%E5%90%8E%E6%84%9F/" class="article-date">
+  <time class="dt-published" datetime="2024-02-27T08:28:50.000Z" itemprop="datePublished">2024-02-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/27/%E4%BD%93%E9%AA%8C%E5%BC%95%E6%93%8E%E8%AF%BB%E5%90%8E%E6%84%9F/">体验引擎读后感</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240227162932.png"></p>
+<p>1.游戏机制与游戏事件的关系。</p>
+<p>如果把做一个游戏比喻成做菜，那么游戏机制就是食材，而且是加工过后的食材，因为世界上的机制是很多的，我们取其中一些来进行组合。</p>
+<p>游戏事件，则是游戏机制的组合，也就是食材组合而成的菜肴。</p>
+<p>而第九艺术，游戏，与其他艺术不同的是，玩家既是食客，又是有一定能力的厨子。</p>
+<p>因为玩家通过游戏机制的组合，可以做出属于自己的菜肴，从而获得自己的进食体验。</p>
+<p>那么这点上来说，其他传统艺术，就像是把菜做好端上来，而游戏更像是自助餐，玩家可以选择不同的食材，然后进行组合得出不同的菜肴。</p>
+<p>当然，这是自助餐的理想状况，实际上，游戏会根据自己自助餐厅的主题，对组合的菜肴进行限制，如果是海鲜主题的，那么我希望你组合的菜肴中必须含有海鲜，否则你只吃牛肉，我们这可不叫牛肉自助餐厅！</p>
+<p>2.事件必须激发某种情感才有意义。</p>
+<p>玩家玩游戏的最终目的，就是获得某种情感体验。</p>
+<p>可以这么说，游戏就是制造情感体验的机器，而玩家操作它来获取。</p>
+<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240227164043.png"></p>
+<p>3.虚构和游戏机制的互相影响。</p>
+<p>有时候游戏机制与虚构之间会互相影响。</p>
+<p>例如有的游戏机制很好，但是无法满足虚构。</p>
+<p>有时候虚构得出一种需要存在的游戏的机制，但实现上可能很复杂，又或者体验上很糟糕。</p>
+<p>因而如何将虚构和游戏机制进行有机结合，衡量游戏设计师水平。</p>
+<p>4.优雅的游戏设计</p>
+<p>通过简单的组合，能够得到复杂的情况。</p>
+<p>5.游戏深度</p>
+<p>无障碍和高追求，以及有一定范围的技巧范围。</p>
+<p>6.弹性挑战</p>
+<p>将挑战变为有梯度的，而不是一个成功或者失败的问题。</p>
+<p>7.循序渐进的新手引导</p>
+<p>8.适应性的难度</p>
+<p>9.关于决策，玩家可能会想象还没有发生的事情。</p>
+<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240227165950.png"></p>
+<p>10.什么应该是丢给玩家做的决策？</p>
+<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240227170256.png"></p>
+<p>例子</p>
+<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240227170504.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/27/%E4%BD%93%E9%AA%8C%E5%BC%95%E6%93%8E%E8%AF%BB%E5%90%8E%E6%84%9F/" data-id="clt864oul0003n4ucf3g04vg5" data-title="体验引擎读后感" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-项目进度" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/02/27/%E9%A1%B9%E7%9B%AE%E8%BF%9B%E5%BA%A6/" class="article-date">
@@ -94,7 +425,12 @@
         <ol>
 <li>定点数导入 √</li>
 <li>基于定点数的物理系统测试与使用 √</li>
-<li>游戏玩法的重新设计与思考</li>
+<li>游戏玩法的重新设计与思考 √</li>
+<li>碰撞分为实体碰撞和触发器碰撞 √</li>
+<li>碰撞三个消息 进入 执行中 离开 √</li>
+<li>玩家需要弄一个容器在身上，接收食物，盘子 √</li>
+<li>实体有父子之分，父移动，子也要移动，子有相对位置的概念 √</li>
+<li>装置，以及装置的碰撞，还有尝试写一个冰箱先。</li>
 </ol>
 
       
@@ -170,7 +506,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li></ul>
     </div>
   </div>
 
@@ -183,11 +519,23 @@
       <ul>
         
           <li>
-            <a href="/2024/02/27/%E9%A1%B9%E7%9B%AE%E8%BF%9B%E5%BA%A6/">项目个人计划安排</a>
+            <a href="/2024/03/01/%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E6%9B%B4%E6%96%B0/">如何进行编辑器的更新</a>
           </li>
         
           <li>
-            <a href="/2024/02/27/%E7%89%A9%E7%90%86%E7%9A%84%E7%AE%80%E5%8D%95%E6%8C%A4%E5%87%BA/">物理的简单挤出</a>
+            <a href="/2024/03/01/%E5%88%9B%E5%BB%BA%E6%8A%80%E8%83%BD%E7%BC%96%E8%BE%91%E5%99%A8/">创建技能编辑器</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/29/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8AB%E5%8C%85/">为什么要用AB包?</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/29/UI%E7%9B%B8%E6%9C%BA%E8%A2%AB%E4%B8%BB%E7%9B%B8%E6%9C%BA%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98/">UI相机被主相机覆盖问题</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/27/%E5%AE%B9%E5%99%A8%E4%B8%8E%E7%9B%98%E5%AD%90/">容器与盘子</a>
           </li>
         
       </ul>
