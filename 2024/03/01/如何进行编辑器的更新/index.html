@@ -6,19 +6,19 @@
   
   <title>如何进行编辑器的更新 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="其中skillCharConfig是记录窗口组件的对象，在其中实现OnUpdate()方法并调用即可。 同时要注意的是Focus()函数，可以使窗口的数据立马进行刷新，以防止出现数据更新卡顿显示的问题。">
+  <meta name="description" content="其中skillCharConfig是记录窗口组件的对象，在其中实现OnUpdate()方法并调用即可。 同时要注意的是Focus()函数，可以使窗口的数据立马进行刷新，以防止出现数据更新卡顿显示的问题。 这里把Focus作为委托调进去，是为了使只有在动画刷新的时候再执行Focus(),以防止在Update函数中卡死 其他窗体">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何进行编辑器的更新">
 <meta property="og:url" content="http://example.com/2024/03/01/%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E6%9B%B4%E6%96%B0/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="其中skillCharConfig是记录窗口组件的对象，在其中实现OnUpdate()方法并调用即可。 同时要注意的是Focus()函数，可以使窗口的数据立马进行刷新，以防止出现数据更新卡顿显示的问题。">
+<meta property="og:description" content="其中skillCharConfig是记录窗口组件的对象，在其中实现OnUpdate()方法并调用即可。 同时要注意的是Focus()函数，可以使窗口的数据立马进行刷新，以防止出现数据更新卡顿显示的问题。 这里把Focus作为委托调进去，是为了使只有在动画刷新的时候再执行Focus(),以防止在Update函数中卡死 其他窗体">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240301124023.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240301125228.png">
 <meta property="article:published_time" content="2024-03-01T04:41:00.000Z">
-<meta property="article:modified_time" content="2024-03-01T04:42:24.676Z">
+<meta property="article:modified_time" content="2024-03-01T04:53:21.462Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240301124023.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240301125228.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -95,9 +95,11 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240301124023.png"></p>
+        <p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240301125228.png"></p>
 <p>其中skillCharConfig是记录窗口组件的对象，在其中实现OnUpdate()方法并调用即可。</p>
 <p>同时要注意的是Focus()函数，可以使窗口的数据立马进行刷新，以防止出现数据更新卡顿显示的问题。</p>
+<p>这里把Focus作为委托调进去，是为了使只有在动画刷新的时候再执行Focus(),以防止在Update函数中卡死</p>
+<p>其他窗体</p>
 
       
     </div>

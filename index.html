@@ -91,9 +91,11 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240301124023.png"></p>
+        <p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240301125228.png"></p>
 <p>其中skillCharConfig是记录窗口组件的对象，在其中实现OnUpdate()方法并调用即可。</p>
 <p>同时要注意的是Focus()函数，可以使窗口的数据立马进行刷新，以防止出现数据更新卡顿显示的问题。</p>
+<p>这里把Focus作为委托调进去，是为了使只有在动画刷新的时候再执行Focus(),以防止在Update函数中卡死</p>
+<p>其他窗体</p>
 
       
     </div>
