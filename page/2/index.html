@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-如何进行编辑器的更新" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/03/01/%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E6%9B%B4%E6%96%B0/" class="article-date">
+  <time class="dt-published" datetime="2024-03-01T04:41:00.000Z" itemprop="datePublished">2024-03-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/03/01/%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E6%9B%B4%E6%96%B0/">如何进行编辑器的更新</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240301125228.png"></p>
+<p>其中skillCharConfig是记录窗口组件的对象，在其中实现OnUpdate()方法并调用即可。</p>
+<p>同时要注意的是Focus()函数，可以使窗口的数据立马进行刷新，以防止出现数据更新卡顿显示的问题。</p>
+<p>这里把Focus作为委托调进去，是为了使只有在动画刷新的时候再执行Focus(),以防止在Update函数中卡死</p>
+<p>其他窗体</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/03/01/%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E6%9B%B4%E6%96%B0/" data-id="clt864oul0004n4uc93ll2sum" data-title="如何进行编辑器的更新" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-创建技能编辑器" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/03/01/%E5%88%9B%E5%BB%BA%E6%8A%80%E8%83%BD%E7%BC%96%E8%BE%91%E5%99%A8/" class="article-date">
+  <time class="dt-published" datetime="2024-03-01T01:13:40.000Z" itemprop="datePublished">2024-03-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/03/01/%E5%88%9B%E5%BB%BA%E6%8A%80%E8%83%BD%E7%BC%96%E8%BE%91%E5%99%A8/">创建技能编辑器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SkillEditorWindow</span> : <span class="title">OdinEditorWindow</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">MenuItem(<span class="string">&quot;Skill/技能编辑器&quot;</span>)</span>]</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SkillEditorWindow <span class="title">ShowWindow</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> GetWindowWithRect&lt;SkillEditorWindow&gt;(<span class="keyword">new</span> Rect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">1000</span>, <span class="number">600</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以创建出窗口，原理就是使用Odin的GetWindowWithRectAPI，创建出该类的一个窗体对象</p>
+<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240301091531.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/03/01/%E5%88%9B%E5%BB%BA%E6%8A%80%E8%83%BD%E7%BC%96%E8%BE%91%E5%99%A8/" data-id="clt864ouk0002n4uccbj6ec3u" data-title="创建技能编辑器" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-为什么要用AB包" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/29/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8AB%E5%8C%85/" class="article-date">
+  <time class="dt-published" datetime="2024-02-29T12:50:33.000Z" itemprop="datePublished">2024-02-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/29/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8AB%E5%8C%85/">为什么要用AB包?</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240229204929.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/29/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8AB%E5%8C%85/" data-id="clt864oui0001n4uc28t6e3en" data-title="为什么要用AB包?" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-UI相机被主相机覆盖问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/29/UI%E7%9B%B8%E6%9C%BA%E8%A2%AB%E4%B8%BB%E7%9B%B8%E6%9C%BA%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98/" class="article-date">
+  <time class="dt-published" datetime="2024-02-29T10:02:45.000Z" itemprop="datePublished">2024-02-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/29/UI%E7%9B%B8%E6%9C%BA%E8%A2%AB%E4%B8%BB%E7%9B%B8%E6%9C%BA%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98/">UI相机被主相机覆盖问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240229180211.png">、</p>
+<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240229180322.png"></p>
+<p>注意，Depth数值越大，越先被渲染，因而UICamera的Depth值要比主相机的要大</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/29/UI%E7%9B%B8%E6%9C%BA%E8%A2%AB%E4%B8%BB%E7%9B%B8%E6%9C%BA%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98/" data-id="clt864oue0000n4uc94fx6gvy" data-title="UI相机被主相机覆盖问题" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-容器与盘子" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/27/%E5%AE%B9%E5%99%A8%E4%B8%8E%E7%9B%98%E5%AD%90/" class="article-date">
+  <time class="dt-published" datetime="2024-02-27T15:59:19.000Z" itemprop="datePublished">2024-02-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/27/%E5%AE%B9%E5%99%A8%E4%B8%8E%E7%9B%98%E5%AD%90/">容器与盘子</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>首先现在有食物，盘子，玩家的手</p>
+<p>玩家的手可以装食物和盘子</p>
+<p>盘子可以装食物</p>
+<p>无论手还是盘子，都只可以装一个东西。</p>
+<p>那说明，手和盘子就可以抽象出一个容器接口。</p>
+<p>容器接口有以下功能</p>
+<ol>
+<li>添加可装载物</li>
+<li>得到可装载物</li>
+<li>去掉可装载物</li>
+</ol>
+<p>可见盘子十分特殊，它既是可装载物，又是容器。那要怎么定义呢？</p>
+<p>玩家主动和装置交互，并且交互的时候，给出用哪个容器，那么判断就是由玩家</p>
+<p>主动发起进行判断。那么以后拓展的逻辑也是要加到玩家身上的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/27/%E5%AE%B9%E5%99%A8%E4%B8%8E%E7%9B%98%E5%AD%90/" data-id="clt864oum0005n4uc60n4249a" data-title="容器与盘子" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-游戏设计" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/27/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/" class="article-date">
+  <time class="dt-published" datetime="2024-02-27T08:58:45.000Z" itemprop="datePublished">2024-02-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/27/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/">游戏设计</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>论市场差异化。</p>
+<p>一开始，我是想做类似分手厨房这样的派对游戏。</p>
+<p>那么我们来分析一下分手厨房有哪些吸引人玩的点。</p>
+<p>1.可爱卡通风 9分</p>
+<p>2.四人联机合作 9分</p>
+<p>3.很多有意思的关卡设计 9分</p>
+<p>然后我就想模仿分手厨房来做，但是这上面，一定是绕不开的点。</p>
+<p>因而，我是否能去做差异化呢？</p>
+<p>如何做差异化？</p>
+<p>先分析下市面上类似分手厨房这样的游戏，主要是怎么一个流程。</p>
+<p>拿材料，做菜，上菜，赚分数。分数到了就过关。</p>
+<p>基本就是这样的模式。</p>
+<p>我的思考，能不能把做菜保留，而在拿材料和上菜这两个点上做文章？</p>
+<p>基于这样的想法，我首先进行拿材料的设计。</p>
+<p>我的思考是这样：拿材料这一块，就是去满足探索者这一类型的玩法。</p>
+<p>探索者他们的特点是，喜欢新奇事物，喜欢随机性，那么探图就是一个乐趣点。</p>
+<p>那么如何去满足探索者们？探索者们要做什么？</p>
+<p>基于此，我给他们的一个谜题，就是如何找到材料，以及获取材料，</p>
+<p>第二个谜题，要如何找到顾客。</p>
+<p>因而，在这个游戏里，探索者是第一批玩家，他们承担着开图，收集材料的任务。</p>
+<p>再来说上菜这块，这块真的有必要弄吗？又是为了满足谁呢？</p>
+<p>上菜这一块，就是玩家把拿好的菜去送然后就能获得分数了，所以奖励就是分数，</p>
+<p>同时这也是给玩家的新任务，要去找到对应的客人然后送上菜肴。</p>
+<p>好的，这两块来说，最重要其实就两个点，一个获取材料，一个制作菜肴。</p>
+<p>接着说制作菜肴，既然存在等待获取材料的时间，那么在获取材料前，应该让玩家</p>
+<p>有事可干，介于此，我觉得要在布置厨房这一块做一点玩法。</p>
+<p>例如，厨房洗碗需要水，那么洗碗池就需要靠近水源，所以地图上必要有一处水源，因而，</p>
+<p>有玩家去开图，同时也要有玩家去寻找水源，建立厨房。</p>
+<p>好的，同时厨房煮饭需要木柴，因而就要玩家去砍木头，因而地图上又必须要有树木。</p>
+<p>这样设计好后，游戏的基本框架就搭建好了。</p>
+<p>现在我们来看看玩家分工会是怎样的。</p>
+<p>二到四个玩家，至少有一名玩家探图，至少有一名玩家大厨，好的，分工就建立起来了。</p>
+<p>然后根据心流曲线，我需要制造一个高潮给玩家。</p>
+<p>假设游戏时长是10分钟，那么玩家前5分钟就是一边开图一边煮饭，一边赚钱的节奏。</p>
+<p>前5分钟只有游荡的敌对生物，干扰玩家。</p>
+<p>后5分钟，开始出现直接进攻玩家基地的怪物，此时游戏节奏将加快，分工又被打乱，</p>
+<p>需要玩家进行配合，煮饭，送餐的同时，击败怪物。</p>
+<p>随着时间越来越接近结束，怪物的进攻越来越频繁。如果玩家被干扰得厉害，不够分数</p>
+<p>也就输了。</p>
+<p>这样，游戏的主基调就确立下来了。同时，我会肉鸽的方式去做游戏进程，因为</p>
+<p>这样，探图和建立基地才有意义，而且由于存在不同的地形和要求，每次玩家开图</p>
+<p>和建立基地，都是一个新的随机出来的谜题，玩家要因地制宜，这样也是乐趣点。</p>
+<p>所以该游戏就包含了，探索，建造，战斗，这三个元素。</p>
+<p>既然框架搭好了，那么先解决如下问题：</p>
+<p>1.地图怎么建立？大小？</p>
+<p>2.游戏时间一局是多少？</p>
+<p>3.有哪些玩家实体要制造？战斗要怎么做？</p>
+<p>回答：1.地图的大小，应该要玩家跑2分钟才能跑完为宜。</p>
+<p>2.游戏时间一局应该在10分钟，太短就失去建东西的意义，5分钟开图建基地，剩下5分钟开始进行塔防部分。</p>
+<p>3.有哪些实体？树木，玩家，怪物，顾客，装置，基地车。暂时是这些。</p>
+<p>战斗的话，玩家分为近战和远程，有物理和魔法区别，接着怪物一样，战斗可以先简单点，后面再想怎么做复杂来，</p>
+<p>游戏的重点还是探索+造东西和做东西，战斗是副，只是拿来增加刺激感的工具，肯定不是主要的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/27/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/" data-id="clt864oun0006n4ucgid8cwix" data-title="游戏设计" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-体验引擎读后感" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/27/%E4%BD%93%E9%AA%8C%E5%BC%95%E6%93%8E%E8%AF%BB%E5%90%8E%E6%84%9F/" class="article-date">
+  <time class="dt-published" datetime="2024-02-27T08:28:50.000Z" itemprop="datePublished">2024-02-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/27/%E4%BD%93%E9%AA%8C%E5%BC%95%E6%93%8E%E8%AF%BB%E5%90%8E%E6%84%9F/">体验引擎读后感</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240227162932.png"></p>
+<p>1.游戏机制与游戏事件的关系。</p>
+<p>如果把做一个游戏比喻成做菜，那么游戏机制就是食材，而且是加工过后的食材，因为世界上的机制是很多的，我们取其中一些来进行组合。</p>
+<p>游戏事件，则是游戏机制的组合，也就是食材组合而成的菜肴。</p>
+<p>而第九艺术，游戏，与其他艺术不同的是，玩家既是食客，又是有一定能力的厨子。</p>
+<p>因为玩家通过游戏机制的组合，可以做出属于自己的菜肴，从而获得自己的进食体验。</p>
+<p>那么这点上来说，其他传统艺术，就像是把菜做好端上来，而游戏更像是自助餐，玩家可以选择不同的食材，然后进行组合得出不同的菜肴。</p>
+<p>当然，这是自助餐的理想状况，实际上，游戏会根据自己自助餐厅的主题，对组合的菜肴进行限制，如果是海鲜主题的，那么我希望你组合的菜肴中必须含有海鲜，否则你只吃牛肉，我们这可不叫牛肉自助餐厅！</p>
+<p>2.事件必须激发某种情感才有意义。</p>
+<p>玩家玩游戏的最终目的，就是获得某种情感体验。</p>
+<p>可以这么说，游戏就是制造情感体验的机器，而玩家操作它来获取。</p>
+<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240227164043.png"></p>
+<p>3.虚构和游戏机制的互相影响。</p>
+<p>有时候游戏机制与虚构之间会互相影响。</p>
+<p>例如有的游戏机制很好，但是无法满足虚构。</p>
+<p>有时候虚构得出一种需要存在的游戏的机制，但实现上可能很复杂，又或者体验上很糟糕。</p>
+<p>因而如何将虚构和游戏机制进行有机结合，衡量游戏设计师水平。</p>
+<p>4.优雅的游戏设计</p>
+<p>通过简单的组合，能够得到复杂的情况。</p>
+<p>5.游戏深度</p>
+<p>无障碍和高追求，以及有一定范围的技巧范围。</p>
+<p>6.弹性挑战</p>
+<p>将挑战变为有梯度的，而不是一个成功或者失败的问题。</p>
+<p>7.循序渐进的新手引导</p>
+<p>8.适应性的难度</p>
+<p>9.关于决策，玩家可能会想象还没有发生的事情。</p>
+<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240227165950.png"></p>
+<p>10.什么应该是丢给玩家做的决策？</p>
+<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240227170256.png"></p>
+<p>例子</p>
+<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240227170504.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/27/%E4%BD%93%E9%AA%8C%E5%BC%95%E6%93%8E%E8%AF%BB%E5%90%8E%E6%84%9F/" data-id="clt864oul0003n4ucf3g04vg5" data-title="体验引擎读后感" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-项目进度" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/27/%E9%A1%B9%E7%9B%AE%E8%BF%9B%E5%BA%A6/" class="article-date">
+  <time class="dt-published" datetime="2024-02-27T03:33:47.000Z" itemprop="datePublished">2024-02-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/27/%E9%A1%B9%E7%9B%AE%E8%BF%9B%E5%BA%A6/">项目个人计划安排</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>定点数导入 √</li>
+<li>基于定点数的物理系统测试与使用 √</li>
+<li>游戏玩法的重新设计与思考 √</li>
+<li>碰撞分为实体碰撞和触发器碰撞 √</li>
+<li>碰撞三个消息 进入 执行中 离开 √</li>
+<li>玩家需要弄一个容器在身上，接收食物，盘子 √</li>
+<li>实体有父子之分，父移动，子也要移动，子有相对位置的概念 √</li>
+<li>装置，以及装置的碰撞，还有尝试写一个冰箱先。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/27/%E9%A1%B9%E7%9B%AE%E8%BF%9B%E5%BA%A6/" data-id="clt3tnpd70001fouc1zgn3qpa" data-title="项目个人计划安排" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-物理的简单挤出" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/27/%E7%89%A9%E7%90%86%E7%9A%84%E7%AE%80%E5%8D%95%E6%8C%A4%E5%87%BA/" class="article-date">
+  <time class="dt-published" datetime="2024-02-27T03:33:26.000Z" itemprop="datePublished">2024-02-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/27/%E7%89%A9%E7%90%86%E7%9A%84%E7%AE%80%E5%8D%95%E6%8C%A4%E5%87%BA/">物理的简单挤出</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>首先问题就是如何在重叠时，将B挤出，如下图所示<br><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/_XWD%7DRG6I(B9G%5B7)%7EJ_%7B%7E84.png"><br><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/%250%7BGON4(4UW)%40Q%40NJBD4%5BWK.png"></p>
+<p>步骤为：<br>1.计算交叠的x,y轴上的大小<br>2.计算交叠中x,y轴哪个更小，以更小的那个轴作为分离向量<br>3.计算分离向量的方向</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">FixIntVector3 minA = aC.LogicPosition + aC.Conter - aC.Size * <span class="number">0.5f</span>;</span><br><span class="line">FixIntVector3 maxA = aC.LogicPosition + aC.Conter + aC.Size * <span class="number">0.5f</span>;</span><br><span class="line">FixIntVector3 minB = bC.LogicPosition + bC.Conter - bC.Size * <span class="number">0.5f</span>;</span><br><span class="line">FixIntVector3 maxB = bC.LogicPosition + bC.Conter + bC.Size * <span class="number">0.5f</span>;</span><br><span class="line"><span class="built_in">float</span> overlapX = Mathf.Min(maxA.x.RawFloat, maxB.x.RawFloat) - Mathf.Max(minA.x.RawFloat, minB.x.RawFloat);</span><br><span class="line"><span class="built_in">float</span> overlapY = Mathf.Min(maxA.y.RawFloat, maxB.y.RawFloat) - Mathf.Max(minA.y.RawFloat, minB.y.RawFloat);</span><br><span class="line"><span class="built_in">float</span> separationX = <span class="number">0f</span>;</span><br><span class="line"><span class="built_in">float</span> separationY = <span class="number">0f</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果有重叠，计算最短分离向量</span></span><br><span class="line"><span class="keyword">if</span> (overlapX &gt; <span class="number">0</span> &amp;&amp; overlapY &gt; <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    separationX = (overlapX &lt; overlapY) ? overlapX : <span class="number">0f</span>;</span><br><span class="line">    separationY = (overlapY &lt; overlapX) ? overlapY : <span class="number">0f</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 确定分离方向</span></span><br><span class="line">    <span class="keyword">if</span> ((aC.LogicPosition + aC.Conter).x &lt; (bC.LogicPosition + bC.Conter).x)</span><br><span class="line">        separationX = -separationX;</span><br><span class="line">    <span class="keyword">if</span> ((aC.LogicPosition + aC.Conter).y &lt; (bC.LogicPosition + bC.Conter).y)</span><br><span class="line">        separationY = -separationY;</span><br><span class="line">    a.SetPosition(a.Position.x + separationX, a.Position.y + separationY, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/27/%E7%89%A9%E7%90%86%E7%9A%84%E7%AE%80%E5%8D%95%E6%8C%A4%E5%87%BA/" data-id="clt3tnpd10000foucatcrew7q" data-title="物理的简单挤出" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/03/22/QFramework%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0/">QFramework架构学习</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/16/AB%E8%B5%84%E6%BA%90%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/">AB资源框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/16/unity%E7%BC%96%E8%BE%91%E5%99%A8%E5%AD%A6%E4%B9%A0/">unity编辑器学习</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/16/Odin%E4%BD%BF%E7%94%A8/">Odin使用</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/14/UI%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/">UI框架学习个人笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

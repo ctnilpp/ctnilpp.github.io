@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>unity编辑器学习 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="1.脚本应该放在哪？ 应该放在Unity的特殊文件夹Editor中，因为Editor中的脚本在打包时是不会被打包出去的。所以我们的Editor相关脚本要放在这里面，如果放在其他地方，就可能无法引用到Editor相关的文件而报错！ 2! 页签添加 注意MenuItem加的函数需要是静态的！ 菜单栏页签 使用特性：MenuItem(“页签&#x2F;一级页签&#x2F;二级页签”) Hierarchy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="unity编辑器学习">
+<meta property="og:url" content="http://example.com/2024/03/16/unity%E7%BC%96%E8%BE%91%E5%99%A8%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.脚本应该放在哪？ 应该放在Unity的特殊文件夹Editor中，因为Editor中的脚本在打包时是不会被打包出去的。所以我们的Editor相关脚本要放在这里面，如果放在其他地方，就可能无法引用到Editor相关的文件而报错！ 2! 页签添加 注意MenuItem加的函数需要是静态的！ 菜单栏页签 使用特性：MenuItem(“页签&#x2F;一级页签&#x2F;二级页签”) Hierarchy">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316175632762.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316175936269.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316180658406.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316180942286.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316181202783.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316181830091.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316214613811.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316214625080.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316214709110.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316214925703.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316214940837.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215051159.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215219815.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215332913.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215608346.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215539072.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215719434.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215758063.png">
+<meta property="article:published_time" content="2024-03-16T09:46:40.000Z">
+<meta property="article:modified_time" content="2024-03-16T14:49:06.566Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316175632762.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-unity编辑器学习" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/03/16/unity%E7%BC%96%E8%BE%91%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="article-date">
+  <time class="dt-published" datetime="2024-03-16T09:46:40.000Z" itemprop="datePublished">2024-03-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      unity编辑器学习
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>1.脚本应该放在哪？</p>
+<p>应该放在Unity的特殊文件夹Editor中，因为Editor中的脚本在打包时是不会被打包出去的。所以我们的Editor相关脚本要放在这里面，如果放在其他地方，就可能无法引用到Editor相关的文件而报错！</p>
+<p>2! 页签添加</p>
+<p>注意MenuItem加的函数需要是静态的！</p>
+<p>菜单栏页签</p>
+<p>使用特性：MenuItem(“页签&#x2F;一级页签&#x2F;二级页签”)</p>
+<p>Hierarchy窗口中添加页签</p>
+<p>使用特性：MenuItem(“GameObject&#x2F;页签&#x2F;一级页签&#x2F;二级页签”) （注意这里的GameObject是规定）</p>
+<p>Project窗口中添加页签</p>
+<p>使用特性：MenuItem(“Assets&#x2F;页签&#x2F;一级页签&#x2F;二级页签”) （注意这里的Assets是规定）</p>
+<p>3.Component菜单添加脚本</p>
+<p>作用：给选中的GameObject添加脚本</p>
+<p>特性：AddComponentMenu(“一级选项&#x2F;二级选项&#x2F;…. “)</p>
+<p>条件：脚本需要继承MonoBehaviour对象</p>
+<p>4.给脚本添加自定义功能</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316175632762.png" alt="image-20240316175632762"></p>
+<p>作用：就是右键脚本的时候弹出的这一个框</p>
+<p>特性：MenuItem(“CONTEXT&#x2F;脚本名&#x2F;页签&#x2F;一级页签&#x2F;…”)  <strong>注意CONTEXT是固定写法和脚本名要与组件名字一致</strong></p>
+<p>条件：静态函数</p>
+<p>5.快捷键</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316175936269.png" alt="image-20240316175936269"></p>
+<p>3! 窗口类</p>
+<p>显示窗口</p>
+<p>条件：一个继承EditorWindow的类</p>
+<p>使用：EditorWindow.GetWindow<T>()</p>
+<p>窗口事件回调</p>
+<p>就是说，窗口本身会监听Unity的一些事件，然后触发回调函数</p>
+<p>回调函数有以下</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316180658406.png" alt="image-20240316180658406"></p>
+<p>窗口常用的生命周期函数</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316180942286.png" alt="image-20240316180942286"></p>
+<p>常用成员</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316181202783.png" alt="image-20240316181202783"></p>
+<p>GUILayout</p>
+<p>在GUI的基础上加入了自动布局功能，使得编写布局时更加便利</p>
+<p>参数</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316181830091.png" alt="image-20240316181830091"></p>
+<p>EditorGUI是什么？</p>
+<p>就是专用于绘制编辑器UI的工具类，有一些GUI中没有的API</p>
+<p>其还有一种特定的自动布局类EditorGUILayout</p>
+<p>EditorGUILayoutOnGUI组件</p>
+<p>文本控件 <img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316214613811.png" alt="image-20240316214613811"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316214625080.png" alt="image-20240316214625080"></p>
+<p>层级、标签</p>
+<p>颜色</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316214709110.png" alt="image-20240316214709110"></p>
+<p>枚举</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316214925703.png" alt="image-20240316214925703"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316214940837.png" alt="image-20240316214940837"></p>
+<p>整数选择</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215051159.png" alt="image-20240316215051159"></p>
+<p>按下触发的按钮控件</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215219815.png" alt="image-20240316215219815"></p>
+<p>对象关联控件</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215332913.png" alt="image-20240316215332913"></p>
+<p>各类型输入控件</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215608346.png" alt="image-20240316215608346"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215539072.png" alt="image-20240316215539072"></p>
+<p>只要记住，输入完之后返回值才会改变就好。</p>
+<p>折叠控件</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215719434.png" alt="image-20240316215719434"></p>
+<p>折叠组控件</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215758063.png" alt="image-20240316215758063"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/03/16/unity%E7%BC%96%E8%BE%91%E5%99%A8%E5%AD%A6%E4%B9%A0/" data-id="clu3qbmn20006dguc3gdcfc7p" data-title="unity编辑器学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/03/16/AB%E8%B5%84%E6%BA%90%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          AB资源框架学习
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/03/16/Odin%E4%BD%BF%E7%94%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Odin使用</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/03/22/QFramework%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0/">QFramework架构学习</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/16/AB%E8%B5%84%E6%BA%90%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/">AB资源框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/16/unity%E7%BC%96%E8%BE%91%E5%99%A8%E5%AD%A6%E4%B9%A0/">unity编辑器学习</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/16/Odin%E4%BD%BF%E7%94%A8/">Odin使用</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/14/UI%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/">UI框架学习个人笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

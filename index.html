@@ -69,10 +69,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-如何进行编辑器的更新" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-QFramework架构学习" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2024/03/01/%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E6%9B%B4%E6%96%B0/" class="article-date">
-  <time class="dt-published" datetime="2024-03-01T04:41:00.000Z" itemprop="datePublished">2024-03-01</time>
+    <a href="/2024/03/22/QFramework%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0/" class="article-date">
+  <time class="dt-published" datetime="2024-03-22T13:38:01.000Z" itemprop="datePublished">2024-03-22</time>
 </a>
     
   </div>
@@ -83,7 +83,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/03/01/%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E6%9B%B4%E6%96%B0/">如何进行编辑器的更新</a>
+      <a class="p-name article-title" href="/2024/03/22/QFramework%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0/">QFramework架构学习</a>
     </h1>
   
 
@@ -91,16 +91,83 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240301125228.png"></p>
-<p>其中skillCharConfig是记录窗口组件的对象，在其中实现OnUpdate()方法并调用即可。</p>
-<p>同时要注意的是Focus()函数，可以使窗口的数据立马进行刷新，以防止出现数据更新卡顿显示的问题。</p>
-<p>这里把Focus作为委托调进去，是为了使只有在动画刷新的时候再执行Focus(),以防止在Update函数中卡死</p>
-<p>其他窗体</p>
+        <h2 id="耦合和内聚"><a href="#耦合和内聚" class="headerlink" title="耦合和内聚"></a>耦合和内聚</h2><h4 id="为什么不用unity最原生的拖拽？"><a href="#为什么不用unity最原生的拖拽？" class="headerlink" title="为什么不用unity最原生的拖拽？"></a>为什么不用unity最原生的拖拽？</h4><p>因为这种拖拽，会产生随机的引用，造成各种耦合，一旦项目复杂，关系会很乱</p>
+<p>特别是在unity是使用树管理的情境下，使用拖拽，导致双向引用，循环引用，也就是耦合</p>
+<h4 id="耦合、内聚"><a href="#耦合、内聚" class="headerlink" title="耦合、内聚"></a>耦合、内聚</h4><p>耦合，也就是双向引用，循环引用，</p>
+<p>耦合的产生有三种原因：</p>
+<p>1.方法的调用</p>
+<p>2.委托和回调</p>
+<p>3.消息或事件</p>
+<p>内聚，也就是同样的代码放在一起</p>
+<p>也就是模块化</p>
+<p>1.单例</p>
+<p>2.IOC 依赖注入</p>
+<p>3.分层 MVC 三层架构</p>
+<h4 id="例子一"><a href="#例子一" class="headerlink" title="例子一"></a>例子一</h4><p>比如，父节点 是 LoginUI界面 子节点是 其上的一个Button按钮</p>
+<p>一开始，父节点知道Button是其子节点(Transform)，Button持有LoginUI的引用，通过这个引用调用其SetActive方法，此时，就产生了双向引用。</p>
+<p>我们第一种去耦合的方式，就是让父节点监听Button的点击事件，从而当Button在点击的时候，会自动关闭自己，显示怪物</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322214435454.png" alt="image-20240322214435454"></p>
+<p>可以看到，这样做，Button并不会持有父节点的引用，而且逻辑也在父节点中编写</p>
+<p>这样子，委托就保证了只产生单向引用（弱耦合）</p>
+<p>但委托要注意产生意大利面条代码（嵌套调用）</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322214702946.png" alt="image-20240322214702946"></p>
+<h4 id="不同模块间的调用"><a href="#不同模块间的调用" class="headerlink" title="不同模块间的调用"></a>不同模块间的调用</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322214754710.png" alt="image-20240322214754710"></p>
+<p>可以看到Enemies是属于Game的，此时却能够被UI下的GameStartPanel所使用，这样就是跨模块对象交互</p>
+<h4 id="为什么跨模块对象交互会有问题？"><a href="#为什么跨模块对象交互会有问题？" class="headerlink" title="为什么跨模块对象交互会有问题？"></a>为什么跨模块对象交互会有问题？</h4><p>因为在实际开发中，模块可能是由不同的人负责的，而这种分工之下，如果跨模块间有引用，就可能造成信息差，从而使得维护上十分麻烦，需要双方不断进行通信，确认引用关系。</p>
+<p>因而我们希望跨模块对象交互能够是无引用的方式去完成的。</p>
+<p>是否能用委托去做？</p>
+<p>不能，因为委托是要持有对象的</p>
+<p>因而就要用到消息和事件</p>
+<h4 id="消息和事件"><a href="#消息和事件" class="headerlink" title="消息和事件"></a>消息和事件</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322215342700.png" alt="image-20240322215342700"></p>
+<p>这样就使得原本不同模块间的对象交互变成模块与模块的交互，这样就可以把逻辑写在大的模块里，而不是写到具体的对象之中</p>
+<p>最后，通过委托，消息，事件</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322215532608.png" alt="image-20240322215532608"></p>
+<p>我们使得父子关系，模块之间的关系变得清晰，从而达到了低耦合，高内聚的目的</p>
+<h2 id="表现和逻辑分离"><a href="#表现和逻辑分离" class="headerlink" title="表现和逻辑分离"></a>表现和逻辑分离</h2><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322221350511.png" alt="image-20240322221350511"></p>
+<p>继承解决扩展的问题</p>
+<p>泛型解决类型不一致的问题</p>
+<h4 id="为何需要单独做一个数据类？"><a href="#为何需要单独做一个数据类？" class="headerlink" title="为何需要单独做一个数据类？"></a>为何需要单独做一个数据类？</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322221532209.png" alt="image-20240322221532209"></p>
+<p>因为数据可能在空间和时间上被多个场景，界面，游戏物体所共享，那么此时由于许多东西都要引用它，因而它的独立性必须是很高的，因而要抽离出来，单独放在一个地方进行维护</p>
+<p>在代码中，游戏是否通过的代码写在了敌人类里面，但是其实是否通过，并不是由敌人决定，而应该由游戏规则决定的</p>
+<p>这就是不符合现实逻辑的代码，增加了阅读的难度</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322221733717.png" alt="image-20240322221733717"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322222033350.png" alt="image-20240322222033350"></p>
+<p>从这点上来说，也就是运行时的数据，不需要放到model里</p>
+<h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322222139061.png" alt="image-20240322222139061"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322222150155.png" alt="image-20240322222150155"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322222247216.png" alt="image-20240322222247216"></p>
+<p>为何不用MVC 而用Command</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322222603771.png" alt="image-20240322222603771"></p>
+<h4 id="数据驱动"><a href="#数据驱动" class="headerlink" title="数据驱动"></a>数据驱动</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322222710989.png" alt="image-20240322222710989"></p>
+<p>也就是通过把表现的逻辑通过事件来注册，表现的逻辑监听的是UI上的数据，如果数据发生改变，则发送事件，使得显示改变，这就叫做数据驱动</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322222828361.png" alt="image-20240322222828361"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322223017818.png" alt="image-20240322223017818"></p>
+<p>BIndableProperty通过将数据和事件变更结合在一起，使得其在数据变更的时候同时会发送事件，大大减少了MV之间的耦合</p>
+<h2 id="Command"><a href="#Command" class="headerlink" title="Command"></a>Command</h2><p>为什么要引入Command?</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322223515559.png" alt="image-20240322223515559"></p>
+<p>交互逻辑是可能越来越多</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322223707160.png" alt="image-20240322223707160"></p>
+<p>通过增加两个继承ICommand的命令类，实现逻辑</p>
+<p>如下图</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322223803892.png" alt="image-20240322223803892"></p>
+<p>本质上Command就是做到了调用和实现分离。</p>
+<p>也就是调用的地方和执行的地方放在了两个文件里</p>
+<h4 id="命令的使用"><a href="#命令的使用" class="headerlink" title="命令的使用"></a>命令的使用</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322224746975.png" alt="image-20240322224746975"></p>
+<h4 id="模块与单例"><a href="#模块与单例" class="headerlink" title="模块与单例"></a>模块与单例</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322224933946.png" alt="image-20240322224933946"></p>
+<p>为什么不能用static去做，而用单例。</p>
+<h4 id="IOC容器"><a href="#IOC容器" class="headerlink" title="IOC容器"></a>IOC容器</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322225218707.png" alt="image-20240322225218707"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322225320387.png" alt="image-20240322225320387"></p>
+<p>IOC容器的定义</p>
+<p>蓝牙管理器</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322225417250.png" alt="image-20240322225417250"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240322225617644.png" alt="image-20240322225617644"></p>
+<h4 id="依赖倒置"><a href="#依赖倒置" class="headerlink" title="依赖倒置"></a>依赖倒置</h4><p>就是说，程序的实现依赖接口，不依赖具体实现</p>
+<p>从而使得可以通过IOC快速切换具体的实现类</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/03/01/%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E6%9B%B4%E6%96%B0/" data-id="clt864oul0004n4uc93ll2sum" data-title="如何进行编辑器的更新" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/03/22/QFramework%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0/" data-id="clu3qbmn20004dguc1lox4v60" data-title="QFramework架构学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -112,10 +179,10 @@
 
 
   
-    <article id="post-创建技能编辑器" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-AB资源框架学习" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2024/03/01/%E5%88%9B%E5%BB%BA%E6%8A%80%E8%83%BD%E7%BC%96%E8%BE%91%E5%99%A8/" class="article-date">
-  <time class="dt-published" datetime="2024-03-01T01:13:40.000Z" itemprop="datePublished">2024-03-01</time>
+    <a href="/2024/03/16/AB%E8%B5%84%E6%BA%90%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/" class="article-date">
+  <time class="dt-published" datetime="2024-03-16T14:27:37.000Z" itemprop="datePublished">2024-03-16</time>
 </a>
     
   </div>
@@ -126,7 +193,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/03/01/%E5%88%9B%E5%BB%BA%E6%8A%80%E8%83%BD%E7%BC%96%E8%BE%91%E5%99%A8/">创建技能编辑器</a>
+      <a class="p-name article-title" href="/2024/03/16/AB%E8%B5%84%E6%BA%90%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/">AB资源框架学习</a>
     </h1>
   
 
@@ -134,14 +201,235 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SkillEditorWindow</span> : <span class="title">OdinEditorWindow</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">MenuItem(<span class="string">&quot;Skill/技能编辑器&quot;</span>)</span>]</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SkillEditorWindow <span class="title">ShowWindow</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> GetWindowWithRect&lt;SkillEditorWindow&gt;(<span class="keyword">new</span> Rect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">1000</span>, <span class="number">600</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样就可以创建出窗口，原理就是使用Odin的GetWindowWithRectAPI，创建出该类的一个窗体对象</p>
+        <p>什么是AB包？</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240318125423964.png" alt="image-20240318125423964"></p>
+<p>​	</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240318130901154.png" alt="image-20240318130901154"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240318131232402.png" alt="image-20240318131232402"></p>
+<p>功能一览</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316222758963.png" alt="image-20240316222758963"></p>
+<p>打包策略的认识</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316222825083.png" alt="image-20240316222825083"></p>
+<p>A与B依赖C</p>
+<p>如果不处理会出现冗余，也就是A和B中都有C</p>
+<p>办法：通过增加配置，使得A,B在加载的时候先去检查C是否已经加载，从而使得C只加载一次</p>
+<p>为什么要用引用计数的办法？</p>
+<p>比如这里的C，如果内存中还有A和B，那计数就是2，</p>
+<p>只有计数变成0的时候，我们才去卸载C</p>
+<p>打包依赖图</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316223114403.png" alt="image-20240316223114403"></p>
+<p>比如LoginWindow依赖于LoginTextures，</p>
+<p>当我们切换场景的时候，LoginWindow预制体销毁，同时内存中加载了LoginTextures，如果是一张大图，那就占内存，比如一张2048x2048的图片，可能就会占5MB，那就很恐怖了，因而我们就要把LoginTextures的AB包给卸载掉，让我们的游戏有更多的运行内存</p>
+<p>策略二</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316223446999.png" alt="image-20240316223446999"></p>
+<p>有顺序的打包</p>
+<p>图片-》特效-》预制体</p>
+<p>原因是他们一般是包含关系，我们打包应该从小到大</p>
+<p>预制体包含特效包含图片。</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316223749653.png" alt="image-20240316223749653"></p>
+<p>为什么打包要分AB和热更？</p>
+<p>AB可以内嵌，而热更需要发公告和清单，还有热更的版本号</p>
+<p>打包所有文件夹</p>
+<h4 id="解决重名问题"><a href="#解决重名问题" class="headerlink" title="解决重名问题"></a>解决重名问题</h4><p>由于多模块打包工具，考虑到多模块问题，并不能只用AB包的名字作为路径名，需要加上模块</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317145805268.png" alt="image-20240317145805268"></p>
+<p>直接用自动生成的模块枚举就可以了</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317150217255.png" alt="image-20240317150217255"></p>
+<p>在Mac平台上可能路径是“\”，所以要进行一下替换</p>
+<p>搜索GUID并用GUID来获取所有预制体</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317151602874.png" alt="image-20240317151602874"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317151733811.png" alt="image-20240317151733811"></p>
+<p>这个是很重要的函数，它是解决AB包冗余的一个重要函数，所有AB包在打入的时候都需要统一进行重复检查</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317152402641.png" alt="image-20240317152402641"></p>
+<p>这个能修改unity内ABName</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317152427680.png" alt="image-20240317152427680"></p>
+<p>为什么要做AB包的配置？</p>
+<p>方便查看导出的AB包信息</p>
+<p>打AB包的代码理解</p>
+<p>路径为 一个父目录 比如 TestTexture</p>
+<p>然后子目录为文件夹 比如 Amiya</p>
+<p>接着Amiya文件夹下有图片</p>
+<p>这样，打出的包就是</p>
+<p>首先是AB包名，由模块_文件夹名组成</p>
+<p>比如我定义的模块名为Texture <img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317214951826.png" alt="image-20240317214951826"></p>
+<p>那么输出的包名就是 <img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215009972.png" alt="image-20240317215009972"></p>
+<p>然后会尝试是否重复加载了路径</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215111005.png" alt="image-20240317215111005"></p>
+<p>如果没有的话，就会添加<img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215130753.png" alt="image-20240317215130753"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215139722.png" alt="image-20240317215139722"></p>
+<p>然后检查包名是否为第一次添加，如果是，则新建一个list，</p>
+<p>否则，就在旧的list里面去添加这个新的ab包。</p>
+<p>然后来到最后一个，修改AB包的名字</p>
+<p>上一步会得到这样的字典 &lt;AB包名， AB包里的文件路径列表&gt;，如下图</p>
+<p>Key就是AB包名，Value是AB包里的所有文件路径列表</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215529444.png" alt="image-20240317215529444"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215659203.png" alt="image-20240317215659203"></p>
+<p>通过遍历，我们会把所有的文件都打入该AB包中</p>
+<p>接着，我们要写一个AB的配置，方便我们查看打出来的AB包包含什么</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215902699.png" alt="image-20240317215902699"></p>
+<p>通过该方法，可以得到我们上一步设置了的所有AB包</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215945595.png" alt="image-20240317215945595"></p>
+<p>遍历，然后加到字典中去（字典为&lt;文件路径名， AB包名&gt;）</p>
+<p>而后，就是遍历字典</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317220035510.png" alt="image-20240317220035510"></p>
+<p>只要不是.cs后缀的文件，我们就创建一个AB包info对象，然后把路径，包名，资源名，crc，以及依赖，生成出来。</p>
+<p>关于依赖如何生成为配置表，我们要GetDependencies获取依赖的所有文件，接着，通过遍历这些文件，去得到这些文件需要用到的AB包，从而把依赖到的所有文件的AB包添加到依赖列表中。（这样的话，在我们实际加载这个资源的时候，会可以遍历这个依赖列表，从而得知我们需要加载哪些AB包。）（这里有个疑问，如果打入的预制体，我们没有相应的依赖，会发生什么呢？）</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317220149543.png" alt="image-20240317220149543"></p>
+<p>最后，就是用unity的api，打出我们设定的ab包</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317220558793.png" alt="image-20240317220558793"></p>
+<p>而且这里，我们就可以进行配置了</p>
+<p>然后unity api会生成一些多余的.manifest文件，我们要进行清理</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317220656404.png" alt="image-20240317220656404"></p>
+<p>清理完后，我们进行加密</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317220914676.png" alt="image-20240317220914676"></p>
+<p>如果是热更模式，我们需要生成热更文件</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317220958571.png" alt="image-20240317220958571"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221027641.png" alt="image-20240317221027641"></p>
+<p>就是把我们上面用api生成的ab包文件，全部复制到热更新的路径之中</p>
+<p>并且热更新，还会生成一个清单出来</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221206706.png" alt="image-20240317221206706"></p>
+<p>总体来说，就是获取我们复制后的文件，然后这些文件生成为HotFileInfo，使用md5加密，而且计算大小，接着放到gotAssetPatch这个对象里</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221409622.png" alt="image-20240317221409622"></p>
+<p>这个对象，把这些热更的ab包数据保存起来，以及赋值本次的补丁版本</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221448313.png" alt="image-20240317221448313"></p>
+<p>然后这些所有的版本，统一放到HotAssetsManifest里面去保存，这样我们就能够获得很多个版本的HotAssetsPatch，</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221606364.png" alt="image-20240317221606364"></p>
+<p>最后，把整个对象写成json文件，并且以二进制的方式，写到热更资源文件夹中</p>
+<p>AB包结果</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221750735.png" alt="image-20240317221750735"></p>
+<p>热更结果</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221844836.png" alt="image-20240317221844836"></p>
+<p>热更的配置表</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221859956.png" alt="image-20240317221859956"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221905265.png" alt="image-20240317221905265"></p>
+<p>CRC是什么？</p>
+<p>将路径转为CRC，方便之后校验</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317154324938.png" alt="image-20240317154324938"></p>
+<p>AssetImporter用的是相对路径，因此进行一下替换</p>
+<p>注意用到 Editor的文件需要放到Editor文件夹下</p>
+<p>但是疑问（那我们做资源框架，岂不是在打包的时候需要到Editor文件夹生成相应的文件咯？）</p>
+<p>为什么不用Unity原生生成的AB包配置信息？</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317155336408.png" alt="image-20240317155336408"></p>
+<p>因为需要我们自己做一个解析，没有我们自己生成一个json来的方便，而且也没办法自定义</p>
+<p>加密AB包 AES</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317155700852.png" alt="image-20240317155700852"></p>
+<p>AB的资源内嵌是什么？</p>
+<p>就是说把AB包放到stream文件夹里面，第一次安装的时候就释放到本地</p>
+<p>其实就是把资源分成 基础 和 DLC模块，一般来说，我们希望用户尽早进入游戏界面内，因而像登录界面资源，大厅资源，都应该作为资源内嵌，而游戏功能，附加的可选择下载的资源，就应该用热更的方式，在用户希望下载的时候再进行下载。</p>
+<p>内嵌资源的代码编写</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317160504164.png" alt="image-20240317160504164"></p>
+<p>内嵌信息，为什么要进行校验，因为如果没有热更过，说明资源是内嵌的，那么校验不一致，覆盖即可，而如果热更过，那就说明热更覆盖了，就不应该再进行资源的内嵌了。</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317161047778.png" alt="image-20240317161047778"></p>
+<p>这个参数是为了让json格式分行，不加就是单行，不方便查看</p>
+<p>热更资源清单和热更资源补丁</p>
+<p>为了防止新的出问题，要分一个稳定版和最新版的。（也就是版本回退，因而需要有版本号）</p>
+<p>多模块，多线程资源下载</p>
+<p>单线程下载</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317175214032.png" alt="image-20240317175214032"></p>
+<p>多线程下载</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317175227957.png" alt="image-20240317175227957"></p>
+<h2 id="下载模块编写"><a href="#下载模块编写" class="headerlink" title="下载模块编写"></a>下载模块编写</h2><h4 id="热更资源模块"><a href="#热更资源模块" class="headerlink" title="热更资源模块"></a>热更资源模块</h4><p>检测资源版本</p>
+<p>首先要先下载资源热更清单</p>
+<p>下载地址</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319145522989.png" alt="image-20240319145522989"></p>
+<p>就是这个</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319145653459.png" alt="image-20240319145653459"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319145709114.png" alt="image-20240319145709114"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319145822680.png" alt="image-20240319145822680"></p>
+<p>完成之后，就会有两个文件</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319150020481.png" alt="image-20240319150020481"></p>
+<p>一个是从服务器下载的最新的</p>
+<p>另一个则是本地的，我们会将这两个文件进行比对，从而得知本地的版本</p>
+<h4 id="判断是否需要热更"><a href="#判断是否需要热更" class="headerlink" title="判断是否需要热更"></a>判断是否需要热更</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319150639331.png" alt="image-20240319150639331"></p>
+<h4 id="计算热更包的大小"><a href="#计算热更包的大小" class="headerlink" title="计算热更包的大小"></a>计算热更包的大小</h4><p>本地热更AB包存放路径</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319150953328.png" alt="image-20240319150953328"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319151158571.png" alt="image-20240319151158571"></p>
+<p>一个数组存所有下载的列表</p>
+<p>另一个存需要下载的列表，因为本地有的文件可能不存在，也可能与服务端的不一致，相当于增量更新</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319151419372.png" alt="image-20240319151419372"></p>
+<p>热更的分层，就是分成三层，然后最大的模块可以有多个</p>
+<h4 id="下载队列"><a href="#下载队列" class="headerlink" title="下载队列"></a>下载队列</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319152045486.png" alt="image-20240319152045486"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319152220233.png" alt="image-20240319152220233"></p>
+<p>优先下载配置文件，因为会动态加载，那么配置文件第一时间被下载好后就会被加载，方便管理AB包信息</p>
+<h4 id="资源下载器"><a href="#资源下载器" class="headerlink" title="资源下载器"></a>资源下载器</h4><p>下载器参数一览</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319152436310.png" alt="image-20240319152436310"></p>
+<p>用的是上面已经处理好的热更信息，然后初始化下载器，进行热更文件的下载</p>
+<p>开始下载热更资源</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317230510330.png" alt="image-20240317230510330"></p>
+<p>首先，进行版本的检查</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317230612135.png" alt="image-20240317230612135"></p>
+<h4 id="线程文件"><a href="#线程文件" class="headerlink" title="线程文件"></a>线程文件</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319153230500.png" alt="image-20240319153230500"></p>
+<p>核心代码</p>
+<p>用HttpWebRequest的Get方法获取到文件字节流</p>
+<p>接着会存到response里面，然后创建本地文件流Filestream</p>
+<p>接着，获得response的文件流后，开始读取</p>
+<p>先从response的流里读取512个字节，然后写到filestream里面</p>
+<p>这样就可以把资源服务器上的二进制文件写到本地中。</p>
+<h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154304576.png" alt="image-20240319154304576"></p>
+<p>根据线程数量，取队列里的东西，开始下载</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154402201.png" alt="image-20240319154402201"></p>
+<p>创建线程，并且开始下载</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154439792.png" alt="image-20240319154439792"></p>
+<p>无论线程下载成功还是失败，都要把回调放到主线程之中，让主线程来执行（一是方便管理，二是在unity中，其他线程无法访问unity的内存）</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154539269.png" alt="image-20240319154539269"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154605690.png" alt="image-20240319154605690"></p>
+<p>StartDownload就是线程开始开启下载，每个线程用Task去Run，然后</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154652575.png" alt="image-20240319154652575"></p>
+<p>无论成功失败，都会触发回调，并把下载的热更文件信息放入回调中</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154751792.png" alt="image-20240319154751792"></p>
+<p>记得上锁，因为是多线程回调，需要保证不在同一时刻操作队列</p>
+<p>同时，主线程更新接口，把参数放到回调之中执行。</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319155012377.png" alt="image-20240319155012377"></p>
+<p>同时，这里执行的函数，就是外部传过来的下载成功的函数，从而外部根据下载的信息，调整显示</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319155136649.png" alt="image-20240319155136649"></p>
+<p>如果下载的是配置文件，立马进行加载</p>
+<p>否则，就传给HotAssetsManager中，进行处理</p>
+<h4 id="多模块下载"><a href="#多模块下载" class="headerlink" title="多模块下载"></a>多模块下载</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319220209813.png" alt="image-20240319220209813"></p>
+<p>不热更的话，会直接把资源内嵌，方便在本地进行debug调试</p>
+<h3 id="资源热更流程"><a href="#资源热更流程" class="headerlink" title="资源热更流程"></a>资源热更流程</h3><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317232110222.png" alt="image-20240317232110222"></p>
+<h3 id="资源解压"><a href="#资源解压" class="headerlink" title="资源解压"></a>资源解压</h3><h4 id="流程-1"><a href="#流程-1" class="headerlink" title="流程"></a>流程</h4><p>热更前，先解压内嵌资源</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320200118701.png" alt="image-20240320200118701"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320200146114.png" alt="image-20240320200146114"></p>
+<p>计算是否需要解压资源，如果要的话，开始把资源解压到本地文件夹中</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320200551825.png" alt="image-20240320200551825"></p>
+<p>从resource文件夹中加载模块包的信息</p>
+<p>然后如果符合条件，就解压到本地中，而且计算解压的大小（单位是M，所以除以1024）</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320201140592.png" alt="image-20240320201140592"></p>
+<p>用unityWebRequest本地读取stream文件内的ab包文件</p>
+<p>然后写到本地文件夹中。</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320201318858.png" alt="image-20240320201318858"></p>
+<p>解压完后，看热更模式，如果是热更模式，连接服务器检查热更版本</p>
+<p>否则直接进入游戏</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320201503939.png" alt="image-20240320201503939"></p>
+<p>看是否进行热更，不是的话直接热更结束，不下载</p>
+<h3 id="AB依赖性和内存引用计数"><a href="#AB依赖性和内存引用计数" class="headerlink" title="AB依赖性和内存引用计数"></a>AB依赖性和内存引用计数<img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317232710237.png" alt="image-20240317232710237"></h3><p>引用计数</p>
+<p>释放资源</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317233623812.png" alt="image-20240317233623812"></p>
+<p>两种释放策略</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317233831430.png" alt="image-20240317233831430"></p>
+<h3 id="资源对象池"><a href="#资源对象池" class="headerlink" title="资源对象池"></a>资源对象池</h3><h4 id="对象池类"><a href="#对象池类" class="headerlink" title="对象池类"></a>对象池类</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320201755824.png" alt="image-20240320201755824"></p>
+<p>池子初始化的时候，就放入类，注意，是无参的！</p>
+<h4 id="资源加载"><a href="#资源加载" class="headerlink" title="资源加载"></a>资源加载</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320115511690.png" alt="image-20240320115511690"></p>
+<p>在编辑器模式下，用的是AssetDatabase加载</p>
+<p>而脱离了编辑器模式，就要用AB包去加载</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320115548256.png" alt="image-20240320115548256"></p>
+<h4 id="资源内嵌"><a href="#资源内嵌" class="headerlink" title="资源内嵌"></a>资源内嵌</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320165811792.png" alt="image-20240320165811792"></p>
+<p>会把打出的AB包放到StreamingAssets中，随着打包一起出去。</p>
+<p>StreamingAssets内的文件在安卓上是可读的</p>
+<h4 id="框架流程理解"><a href="#框架流程理解" class="headerlink" title="框架流程理解"></a>框架流程理解</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320180828629.png" alt="image-20240320180828629"></p>
+<p>热更完成后进行回调</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320180841790.png" alt="image-20240320180841790"></p>
+<p>在线程中完成配置的加载，并在加载完后调用main脚本的StartGame函数</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320181659103.png" alt="image-20240320181659103"></p>
+<p>如果是内嵌的情况下，会从内嵌解压了的文件夹中读取配置，然后把资源的信息放到AB字典里。</p>
+<p>下面是解压了后的AB包所在位置，这里的解压是从内嵌资源那边放过来的。？</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320181739479.png" alt="image-20240320181739479"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320182748236.png" alt="image-20240320182748236"></p>
+<p>在加载的时候，检查是否是热更路径，不是的话，就用内嵌路径加载</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/03/01/%E5%88%9B%E5%BB%BA%E6%8A%80%E8%83%BD%E7%BC%96%E8%BE%91%E5%99%A8/" data-id="clt864ouk0002n4uccbj6ec3u" data-title="创建技能编辑器" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/03/16/AB%E8%B5%84%E6%BA%90%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/" data-id="clu3qbmmz0001dguchuqv4pgp" data-title="AB资源框架学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -153,10 +441,10 @@
 
 
   
-    <article id="post-为什么要用AB包" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-unity编辑器学习" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2024/02/29/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8AB%E5%8C%85/" class="article-date">
-  <time class="dt-published" datetime="2024-02-29T12:50:33.000Z" itemprop="datePublished">2024-02-29</time>
+    <a href="/2024/03/16/unity%E7%BC%96%E8%BE%91%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="article-date">
+  <time class="dt-published" datetime="2024-03-16T09:46:40.000Z" itemprop="datePublished">2024-03-16</time>
 </a>
     
   </div>
@@ -167,7 +455,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/02/29/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8AB%E5%8C%85/">为什么要用AB包?</a>
+      <a class="p-name article-title" href="/2024/03/16/unity%E7%BC%96%E8%BE%91%E5%99%A8%E5%AD%A6%E4%B9%A0/">unity编辑器学习</a>
     </h1>
   
 
@@ -175,12 +463,74 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240229204929.png"></p>
+        <p>1.脚本应该放在哪？</p>
+<p>应该放在Unity的特殊文件夹Editor中，因为Editor中的脚本在打包时是不会被打包出去的。所以我们的Editor相关脚本要放在这里面，如果放在其他地方，就可能无法引用到Editor相关的文件而报错！</p>
+<p>2! 页签添加</p>
+<p>注意MenuItem加的函数需要是静态的！</p>
+<p>菜单栏页签</p>
+<p>使用特性：MenuItem(“页签&#x2F;一级页签&#x2F;二级页签”)</p>
+<p>Hierarchy窗口中添加页签</p>
+<p>使用特性：MenuItem(“GameObject&#x2F;页签&#x2F;一级页签&#x2F;二级页签”) （注意这里的GameObject是规定）</p>
+<p>Project窗口中添加页签</p>
+<p>使用特性：MenuItem(“Assets&#x2F;页签&#x2F;一级页签&#x2F;二级页签”) （注意这里的Assets是规定）</p>
+<p>3.Component菜单添加脚本</p>
+<p>作用：给选中的GameObject添加脚本</p>
+<p>特性：AddComponentMenu(“一级选项&#x2F;二级选项&#x2F;…. “)</p>
+<p>条件：脚本需要继承MonoBehaviour对象</p>
+<p>4.给脚本添加自定义功能</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316175632762.png" alt="image-20240316175632762"></p>
+<p>作用：就是右键脚本的时候弹出的这一个框</p>
+<p>特性：MenuItem(“CONTEXT&#x2F;脚本名&#x2F;页签&#x2F;一级页签&#x2F;…”)  <strong>注意CONTEXT是固定写法和脚本名要与组件名字一致</strong></p>
+<p>条件：静态函数</p>
+<p>5.快捷键</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316175936269.png" alt="image-20240316175936269"></p>
+<p>3! 窗口类</p>
+<p>显示窗口</p>
+<p>条件：一个继承EditorWindow的类</p>
+<p>使用：EditorWindow.GetWindow<T>()</p>
+<p>窗口事件回调</p>
+<p>就是说，窗口本身会监听Unity的一些事件，然后触发回调函数</p>
+<p>回调函数有以下</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316180658406.png" alt="image-20240316180658406"></p>
+<p>窗口常用的生命周期函数</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316180942286.png" alt="image-20240316180942286"></p>
+<p>常用成员</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316181202783.png" alt="image-20240316181202783"></p>
+<p>GUILayout</p>
+<p>在GUI的基础上加入了自动布局功能，使得编写布局时更加便利</p>
+<p>参数</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316181830091.png" alt="image-20240316181830091"></p>
+<p>EditorGUI是什么？</p>
+<p>就是专用于绘制编辑器UI的工具类，有一些GUI中没有的API</p>
+<p>其还有一种特定的自动布局类EditorGUILayout</p>
+<p>EditorGUILayoutOnGUI组件</p>
+<p>文本控件 <img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316214613811.png" alt="image-20240316214613811"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316214625080.png" alt="image-20240316214625080"></p>
+<p>层级、标签</p>
+<p>颜色</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316214709110.png" alt="image-20240316214709110"></p>
+<p>枚举</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316214925703.png" alt="image-20240316214925703"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316214940837.png" alt="image-20240316214940837"></p>
+<p>整数选择</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215051159.png" alt="image-20240316215051159"></p>
+<p>按下触发的按钮控件</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215219815.png" alt="image-20240316215219815"></p>
+<p>对象关联控件</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215332913.png" alt="image-20240316215332913"></p>
+<p>各类型输入控件</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215608346.png" alt="image-20240316215608346"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215539072.png" alt="image-20240316215539072"></p>
+<p>只要记住，输入完之后返回值才会改变就好。</p>
+<p>折叠控件</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215719434.png" alt="image-20240316215719434"></p>
+<p>折叠组控件</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316215758063.png" alt="image-20240316215758063"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/02/29/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8AB%E5%8C%85/" data-id="clt864oui0001n4uc28t6e3en" data-title="为什么要用AB包?" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/03/16/unity%E7%BC%96%E8%BE%91%E5%99%A8%E5%AD%A6%E4%B9%A0/" data-id="clu3qbmn20006dguc3gdcfc7p" data-title="unity编辑器学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -192,10 +542,10 @@
 
 
   
-    <article id="post-UI相机被主相机覆盖问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-Odin使用" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2024/02/29/UI%E7%9B%B8%E6%9C%BA%E8%A2%AB%E4%B8%BB%E7%9B%B8%E6%9C%BA%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98/" class="article-date">
-  <time class="dt-published" datetime="2024-02-29T10:02:45.000Z" itemprop="datePublished">2024-02-29</time>
+    <a href="/2024/03/16/Odin%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time class="dt-published" datetime="2024-03-16T04:48:22.000Z" itemprop="datePublished">2024-03-16</time>
 </a>
     
   </div>
@@ -206,7 +556,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/02/29/UI%E7%9B%B8%E6%9C%BA%E8%A2%AB%E4%B8%BB%E7%9B%B8%E6%9C%BA%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98/">UI相机被主相机覆盖问题</a>
+      <a class="p-name article-title" href="/2024/03/16/Odin%E4%BD%BF%E7%94%A8/">Odin使用</a>
     </h1>
   
 
@@ -214,14 +564,13 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240229180211.png">、</p>
-<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240229180322.png"></p>
-<p>注意，Depth数值越大，越先被渲染，因而UICamera的Depth值要比主相机的要大</p>
+        <p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316125344034.png" alt="image-20240316125344034"></p>
+<p>注意加宏命令，因为不在Editor文件夹的文件会被打包出去，UntiyEditor不在打包内，引用可能会报错</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/02/29/UI%E7%9B%B8%E6%9C%BA%E8%A2%AB%E4%B8%BB%E7%9B%B8%E6%9C%BA%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98/" data-id="clt864oue0000n4uc94fx6gvy" data-title="UI相机被主相机覆盖问题" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/03/16/Odin%E4%BD%BF%E7%94%A8/" data-id="clu3qbmn10003dguc8qwhd8a7" data-title="Odin使用" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -233,10 +582,10 @@
 
 
   
-    <article id="post-容器与盘子" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-UI框架学习个人笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2024/02/27/%E5%AE%B9%E5%99%A8%E4%B8%8E%E7%9B%98%E5%AD%90/" class="article-date">
-  <time class="dt-published" datetime="2024-02-27T15:59:19.000Z" itemprop="datePublished">2024-02-27</time>
+    <a href="/2024/03/14/UI%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2024-03-14T02:33:40.000Z" itemprop="datePublished">2024-03-14</time>
 </a>
     
   </div>
@@ -247,7 +596,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/02/27/%E5%AE%B9%E5%99%A8%E4%B8%8E%E7%9B%98%E5%AD%90/">容器与盘子</a>
+      <a class="p-name article-title" href="/2024/03/14/UI%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/">UI框架学习个人笔记</a>
     </h1>
   
 
@@ -255,190 +604,87 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>首先现在有食物，盘子，玩家的手</p>
-<p>玩家的手可以装食物和盘子</p>
-<p>盘子可以装食物</p>
-<p>无论手还是盘子，都只可以装一个东西。</p>
-<p>那说明，手和盘子就可以抽象出一个容器接口。</p>
-<p>容器接口有以下功能</p>
+        <p>为什么要单独弄一个窗口的生命周期？如果用Unity原生的生命周期会有什么问题吗？</p>
+<p>为什么会有单遮和叠遮？</p>
+<p>概念：</p>
+<p>UI 遮罩系统是项目中很重要的一个功能，市面上普遍存在的两种遮罩模式：一种是<strong>单遮模式</strong>，一种是<strong>叠遮模式</strong>。</p>
+<p><strong>单遮模式</strong>：无论打开多少界面，<em>遮罩只有一层</em>。(市面上常用的遮罩模式，但是更复杂，问题也更多。)</p>
+<p><strong>叠遮模式</strong>：即<em>每一个界面都有一层遮罩</em>，打开的界面越多，遮罩越黑。</p>
+<p>而有时候美术或者策划希望在打开多个窗口时，玩家还能隐约看到背景里的窗口，此时就需要用到单遮模式了，因为叠遮模式是多个界面的叠加，界面越多，遮罩越黑。</p>
+<p>默认情况下，UGUI本身就是叠遮的，多个mask可以叠加到一起。</p>
+<p>而为了实现单遮，我们的思路是：</p>
+<p>在初始化，显示，隐藏，销毁UI的时候，对所有可见的UI进行单遮设置。</p>
+<p>算法：</p>
+<p>1.将所有UI的遮罩层关闭（细节就是将UIMask层上的CanvasGroup设置为0）</p>
+<p>2.遍历出所有可见UI中，sortingOrder最高的UI，如果sortingOrder一样，则取节点层级最高（比较GetSiblingIndex()）</p>
+<p>3.如果遍历有结果，就把这个结果的遮罩层打开。</p>
+<p>为什么需要层级系统？</p>
+<p>因为界面上有可能放置模型或者特效，而模型和特效的层级是没有定义的，分为层级系统，就可以定义挂载页面上的模型的层级，这样做到不同页面，模型或者特效显示的顺序，防止上层的界面被下层的界面的模型或者特效穿透。</p>
+<p><img src="https://www.fantsida.com/assets/files/2024-01-07/1704609819-353240-image.png" alt="img"></p>
+<p>每一个模板的父物体都是一个 <code>Canvas</code>，因为 <code>Canvas</code> 本身是不需要 <code>DrawCall</code> 的？为啥？</p>
+<p>自动化代码生成</p>
+<p>首先遍历gameobject上的字段，如果名字中带有”[“和”]”，说明是功能组件，然后解析字符串获取功能字符串和名字字符串，存到editor对象中。然后因为用的GetChild(i)获取，递归遍历完全部就可以了。</p>
+<p>自动化代码的增量生成问题</p>
+<p>周期函数和个人的Api函数都是在第一次生成好的，后续不用改，因而要改的是UI组件事件，所以思路是在UI组件事件中插入新的函数</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240314181807649.png" alt="image-20240314181807649"></p>
+<p>第一种，是用Find去寻找并生成</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240314181904212.png" alt="image-20240314181904212"></p>
+<p>第二种，则是挂载一个脚本在GameObject上</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240314181919390.png" alt="image-20240314181919390"></p>
+<p>为什么要有堆栈系统？</p>
+<p>因为希望界面如同栈一般，关闭一个，会弹回上一个出来，原生的unity并不支持这个功能，如果不实现一个栈，又在管理上非常麻烦，不应该由界面单独做逻辑，而应该让UIModule模块统一管理进行UI堆栈的管理。</p>
+<p>堆栈系统的设计是这样的。</p>
+<p>首先整个项目有两个显示界面的方式，一种是普通，一种是堆栈。</p>
+<p>两者走的函数不一样，然后前者的ui界面之间是没有关联的。</p>
+<p>然后是后者，后者的话，是会维护一个队列来管理界面，同时会设计一个状态，表示堆栈里的ui是否弹完了。</p>
+<p>然后堆栈界面生成后，会压到队列里，并且把堆栈是否开启的状态打开。</p>
+<p>在这个界面隐藏或者销毁的时候，要测试是否有堆栈界面，堆栈状态是否开启，当前隐藏的界面是否是堆栈界面。</p>
+<p>假如是的话，就拿队列的界面显示，然后步骤继续是上面这样。直到所有堆栈界面被弹完，才把状态设置为关闭。</p>
+<p>同时放入堆栈的弹窗，还可以用Action放入参数，在弹窗被弹出的时候执行。</p>
+<p>还有，这里我想，如果中途有普通的界面要被打开，也就是在界面初始化或者打开的时候，也要检查一下当前堆栈状态是否打开，如果是的话，就应该把这个也放到队列之中，这样就不会说这个新的界面突然出现，而是跟着顺序打开完。当然，这里是否要这样做可以看需求。</p>
+<p>为什么要用UIModule统一管理动画？</p>
+<p>UI性能优化</p>
+<p>加载对象的消耗，比如</p>
+<p>1.资源加载，例如图片加载，自身加载的同时还加载图集，</p>
+<p>2.引用其他对象，还要加载其他对象上的资源，而且一般是递归引用，这样的话就会造成卡顿。</p>
+<p>3.CPU计算网格数据，顶点信息，也就是我们常说的DrawCall</p>
+<p>解决的方法有拆分，但是如果界面或者对象无法再进行拆分了，这个时候就得考虑使用预加载的方法</p>
+<p>哪些操作会引起网格重建？</p>
+<p>图片，Gaemobject,Canvas的SetActive（所有子物体都会重建）, Text的赋值，颜色的修改，调整图片和文字透明度</p>
+<p>UI的缩放不引起，CanvasGroup不引起</p>
+<p>为什么不能频繁SetActive?</p>
+<p>有哪些方法可以提高UI的性能</p>
 <ol>
-<li>添加可装载物</li>
-<li>得到可装载物</li>
-<li>去掉可装载物</li>
+<li>Canvasgroup修改透明度</li>
+<li>组件的SetActive改成将大小变成零(但是如果其上仍可以接触的话，，，不过也可以在函数里关掉) （这个可以用一个代理类写拓展方法去做。）</li>
 </ol>
-<p>可见盘子十分特殊，它既是可装载物，又是容器。那要怎么定义呢？</p>
-<p>玩家主动和装置交互，并且交互的时候，给出用哪个容器，那么判断就是由玩家</p>
-<p>主动发起进行判断。那么以后拓展的逻辑也是要加到玩家身上的。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/02/27/%E5%AE%B9%E5%99%A8%E4%B8%8E%E7%9B%98%E5%AD%90/" data-id="clt864oum0005n4uc60n4249a" data-title="容器与盘子" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-游戏设计" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/02/27/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/" class="article-date">
-  <time class="dt-published" datetime="2024-02-27T08:58:45.000Z" itemprop="datePublished">2024-02-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/02/27/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/">游戏设计</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>游戏机制</p>
-<p>1.玩家交互</p>
-<p>只有两个按钮 GRAD 和 USE</p>
-<p>2.实体</p>
-<p>​	1.干员</p>
-<p>​	2.装置</p>
-<p>​	3.桌子</p>
-<p>游戏事件</p>
-<p>情感</p>
-<p>体验</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/02/27/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/" data-id="clt864oun0006n4ucgid8cwix" data-title="游戏设计" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-体验引擎读后感" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/02/27/%E4%BD%93%E9%AA%8C%E5%BC%95%E6%93%8E%E8%AF%BB%E5%90%8E%E6%84%9F/" class="article-date">
-  <time class="dt-published" datetime="2024-02-27T08:28:50.000Z" itemprop="datePublished">2024-02-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/02/27/%E4%BD%93%E9%AA%8C%E5%BC%95%E6%93%8E%E8%AF%BB%E5%90%8E%E6%84%9F/">体验引擎读后感</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240227162932.png"></p>
-<p>1.游戏机制与游戏事件的关系。</p>
-<p>如果把做一个游戏比喻成做菜，那么游戏机制就是食材，而且是加工过后的食材，因为世界上的机制是很多的，我们取其中一些来进行组合。</p>
-<p>游戏事件，则是游戏机制的组合，也就是食材组合而成的菜肴。</p>
-<p>而第九艺术，游戏，与其他艺术不同的是，玩家既是食客，又是有一定能力的厨子。</p>
-<p>因为玩家通过游戏机制的组合，可以做出属于自己的菜肴，从而获得自己的进食体验。</p>
-<p>那么这点上来说，其他传统艺术，就像是把菜做好端上来，而游戏更像是自助餐，玩家可以选择不同的食材，然后进行组合得出不同的菜肴。</p>
-<p>当然，这是自助餐的理想状况，实际上，游戏会根据自己自助餐厅的主题，对组合的菜肴进行限制，如果是海鲜主题的，那么我希望你组合的菜肴中必须含有海鲜，否则你只吃牛肉，我们这可不叫牛肉自助餐厅！</p>
-<p>2.事件必须激发某种情感才有意义。</p>
-<p>玩家玩游戏的最终目的，就是获得某种情感体验。</p>
-<p>可以这么说，游戏就是制造情感体验的机器，而玩家操作它来获取。</p>
-<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240227164043.png"></p>
-<p>3.虚构和游戏机制的互相影响。</p>
-<p>有时候游戏机制与虚构之间会互相影响。</p>
-<p>例如有的游戏机制很好，但是无法满足虚构。</p>
-<p>有时候虚构得出一种需要存在的游戏的机制，但实现上可能很复杂，又或者体验上很糟糕。</p>
-<p>因而如何将虚构和游戏机制进行有机结合，衡量游戏设计师水平。</p>
-<p>4.优雅的游戏设计</p>
-<p>通过简单的组合，能够得到复杂的情况。</p>
-<p>5.游戏深度</p>
-<p>无障碍和高追求，以及有一定范围的技巧范围。</p>
-<p>6.弹性挑战</p>
-<p>将挑战变为有梯度的，而不是一个成功或者失败的问题。</p>
-<p>7.循序渐进的新手引导</p>
-<p>8.适应性的难度</p>
-<p>9.关于决策，玩家可能会想象还没有发生的事情。</p>
-<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240227165950.png"></p>
-<p>10.什么应该是丢给玩家做的决策？</p>
-<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240227170256.png"></p>
-<p>例子</p>
-<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240227170504.png"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/02/27/%E4%BD%93%E9%AA%8C%E5%BC%95%E6%93%8E%E8%AF%BB%E5%90%8E%E6%84%9F/" data-id="clt864oul0003n4ucf3g04vg5" data-title="体验引擎读后感" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-项目进度" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/02/27/%E9%A1%B9%E7%9B%AE%E8%BF%9B%E5%BA%A6/" class="article-date">
-  <time class="dt-published" datetime="2024-02-27T03:33:47.000Z" itemprop="datePublished">2024-02-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/02/27/%E9%A1%B9%E7%9B%AE%E8%BF%9B%E5%BA%A6/">项目个人计划安排</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <ol>
-<li>定点数导入 √</li>
-<li>基于定点数的物理系统测试与使用 √</li>
-<li>游戏玩法的重新设计与思考 √</li>
-<li>碰撞分为实体碰撞和触发器碰撞 √</li>
-<li>碰撞三个消息 进入 执行中 离开 √</li>
-<li>玩家需要弄一个容器在身上，接收食物，盘子 √</li>
-<li>实体有父子之分，父移动，子也要移动，子有相对位置的概念 √</li>
-<li>装置，以及装置的碰撞，还有尝试写一个冰箱先。</li>
+<p>为什么禁用RaycastTarget可以提高性能？</p>
+<ol>
+<li><strong>减少射线投射检测</strong></li>
+<li><strong>减少事件触发的计算</strong>: </li>
+<li><strong>优化渲染批次</strong>:</li>
 </ol>
+<p>如何进行UI的Batch优化？</p>
+<ol>
+<li><strong>注意UI排列的顺序</strong>同组件以及其材质一样，会进行合批，如果中间隔着其他组件，则会打断合批 因此引发 -》使用相同材质贴图的UI尽量保持深度相同，这样对合批算法友好，速度快。</li>
+<li>修改Image的Color属性，原理是修改顶点色，会引起网格Rebatch，同时触发Canvas.SendWillRenderCanvases。好处在于修改顶点色材质不变，没有额外DC。修改shader颜色不会重绘，材质不变，没有Rebatch。-》也就是说，可以用shader进行颜色修改，而不是用unity的color组件</li>
+<li>少用Mask，用RectMask2D代替。</li>
+<li>TextMeshPro代替原生text。</li>
+</ol>
+<p>通用优化策略</p>
+<ul>
+<li>血条、飘字等实时刷新的注意性能，容易出现瓶颈。可以减少可见数量，降低远处刷新频率等。</li>
+<li>gameobject隐藏方法，enable有很大消耗，底层处理很多东西，移动坐标或是设置layer。</li>
+<li>简化UI结构，空的节点越少越好，层级越少越好，不用的节点及时删除。因为UI一般修改较多，很容易把不显示的隐藏，依然有一定消耗。</li>
+<li>界面上少挂粒子特效，动态加载。</li>
+</ul>
+<p>UI优化的经验</p>
+<p>常驻的就是主界面，战斗相关飘字血条等，这部分是要注意的，并没有太好的优化方法，因为数量在那摆着，一般血条飘字这种会限制数量，用插件等方法，也算是比较成熟的解决方案了。再一个就是功能UI，一般这种都是全屏的，也就是说同时并没有多少其他消耗，UI占用多些问题也不大，当然做的时候还是会加限制。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/02/27/%E9%A1%B9%E7%9B%AE%E8%BF%9B%E5%BA%A6/" data-id="clt3tnpd70001fouc1zgn3qpa" data-title="项目个人计划安排" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/03/14/UI%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/" data-id="clu3qbmn20005dguccah23hmm" data-title="UI框架学习个人笔记" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -450,10 +696,10 @@
 
 
   
-    <article id="post-物理的简单挤出" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-回合流程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2024/02/27/%E7%89%A9%E7%90%86%E7%9A%84%E7%AE%80%E5%8D%95%E6%8C%A4%E5%87%BA/" class="article-date">
-  <time class="dt-published" datetime="2024-02-27T03:33:26.000Z" itemprop="datePublished">2024-02-27</time>
+    <a href="/2024/03/07/%E5%9B%9E%E5%90%88%E6%B5%81%E7%A8%8B/" class="article-date">
+  <time class="dt-published" datetime="2024-03-07T07:48:38.000Z" itemprop="datePublished">2024-03-07</time>
 </a>
     
   </div>
@@ -464,7 +710,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/02/27/%E7%89%A9%E7%90%86%E7%9A%84%E7%AE%80%E5%8D%95%E6%8C%A4%E5%87%BA/">物理的简单挤出</a>
+      <a class="p-name article-title" href="/2024/03/07/%E5%9B%9E%E5%90%88%E6%B5%81%E7%A8%8B/">回合流程</a>
     </h1>
   
 
@@ -472,13 +718,209 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>首先问题就是如何在重叠时，将B挤出，如下图所示<br><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/_XWD%7DRG6I(B9G%5B7)%7EJ_%7B%7E84.png"><br><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/%250%7BGON4(4UW)%40Q%40NJBD4%5BWK.png"></p>
-<p>步骤为：<br>1.计算交叠的x,y轴上的大小<br>2.计算交叠中x,y轴哪个更小，以更小的那个轴作为分离向量<br>3.计算分离向量的方向</p>
-<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">FixIntVector3 minA = aC.LogicPosition + aC.Conter - aC.Size * <span class="number">0.5f</span>;</span><br><span class="line">FixIntVector3 maxA = aC.LogicPosition + aC.Conter + aC.Size * <span class="number">0.5f</span>;</span><br><span class="line">FixIntVector3 minB = bC.LogicPosition + bC.Conter - bC.Size * <span class="number">0.5f</span>;</span><br><span class="line">FixIntVector3 maxB = bC.LogicPosition + bC.Conter + bC.Size * <span class="number">0.5f</span>;</span><br><span class="line"><span class="built_in">float</span> overlapX = Mathf.Min(maxA.x.RawFloat, maxB.x.RawFloat) - Mathf.Max(minA.x.RawFloat, minB.x.RawFloat);</span><br><span class="line"><span class="built_in">float</span> overlapY = Mathf.Min(maxA.y.RawFloat, maxB.y.RawFloat) - Mathf.Max(minA.y.RawFloat, minB.y.RawFloat);</span><br><span class="line"><span class="built_in">float</span> separationX = <span class="number">0f</span>;</span><br><span class="line"><span class="built_in">float</span> separationY = <span class="number">0f</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果有重叠，计算最短分离向量</span></span><br><span class="line"><span class="keyword">if</span> (overlapX &gt; <span class="number">0</span> &amp;&amp; overlapY &gt; <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    separationX = (overlapX &lt; overlapY) ? overlapX : <span class="number">0f</span>;</span><br><span class="line">    separationY = (overlapY &lt; overlapX) ? overlapY : <span class="number">0f</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 确定分离方向</span></span><br><span class="line">    <span class="keyword">if</span> ((aC.LogicPosition + aC.Conter).x &lt; (bC.LogicPosition + bC.Conter).x)</span><br><span class="line">        separationX = -separationX;</span><br><span class="line">    <span class="keyword">if</span> ((aC.LogicPosition + aC.Conter).y &lt; (bC.LogicPosition + bC.Conter).y)</span><br><span class="line">        separationY = -separationY;</span><br><span class="line">    a.SetPosition(a.Position.x + separationX, a.Position.y + separationY, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>一个回合开始</p>
+<p>根据敏捷值获取英雄行动队列</p>
+<p>if 从队列弹出英雄</p>
+<p>英雄开始执行操作</p>
+<p>检查怒气值，如果怒气值为满发大招，没满，就释放普通攻击（默认第一个是普攻，第二个是大招）</p>
+<p>英雄行动完成，返回给回合控制器，回合控制器继续弹出下一个。  </p>
+<p>else 说明英雄已经行动完毕，回合数+1，开启下一个回合。</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/02/27/%E7%89%A9%E7%90%86%E7%9A%84%E7%AE%80%E5%8D%95%E6%8C%A4%E5%87%BA/" data-id="clt3tnpd10000foucatcrew7q" data-title="物理的简单挤出" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/03/07/%E5%9B%9E%E5%90%88%E6%B5%81%E7%A8%8B/" data-id="clu3qbmn40008dgucfyl49gda" data-title="回合流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-游戏流程梳理" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/03/05/%E6%B8%B8%E6%88%8F%E6%B5%81%E7%A8%8B%E6%A2%B3%E7%90%86/" class="article-date">
+  <time class="dt-published" datetime="2024-03-05T04:10:35.000Z" itemprop="datePublished">2024-03-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/03/05/%E6%B8%B8%E6%88%8F%E6%B5%81%E7%A8%8B%E6%A2%B3%E7%90%86/">游戏流程梳理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Data层创建</p>
+<p>网络层创建</p>
+<p>逻辑层创建</p>
+<p>UI创建</p>
+<p>调用逻辑层创建英雄</p>
+<p>英雄先创建Logic，然后调用LogicOnCreate()</p>
+<p>英雄再申请GameObject</p>
+<p>获取HeroRender</p>
+<p>HeroRender设置HeroData</p>
+<p>改变英雄朝向</p>
+<p>HeroLogic设置HeroRender</p>
+<p>HeroRender设置HeroLogic</p>
+<p>英雄派发事件创建血条</p>
+<p>血条在创建之后，传入Window，实现更新，并且在HeroRender中SetHPHUD</p>
+<p>SetHPHUD会进行更新UpdateHUD</p>
+<p>进入回合流程OnStart()</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/03/05/%E6%B8%B8%E6%88%8F%E6%B5%81%E7%A8%8B%E6%A2%B3%E7%90%86/" data-id="clu3qbmn50009dgucd49qgm2d" data-title="游戏流程梳理" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Net的路径和文件创建" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/03/04/Net%E7%9A%84%E8%B7%AF%E5%BE%84%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%9B%E5%BB%BA/" class="article-date">
+  <time class="dt-published" datetime="2024-03-04T02:08:57.000Z" itemprop="datePublished">2024-03-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/03/04/Net%E7%9A%84%E8%B7%AF%E5%BE%84%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%9B%E5%BB%BA/">.Net的路径和文件创建</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/03/04/Net%E7%9A%84%E8%B7%AF%E5%BE%84%E5%92%8C%E6%96%87%E4%BB%B6%E5%88%9B%E5%BB%BA/" data-id="clu3qbmn00002dguceta28bek" data-title=".Net的路径和文件创建" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-AssetBundle的使用" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/03/02/AssetBundle%E7%9A%84%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time class="dt-published" datetime="2024-03-02T14:26:35.000Z" itemprop="datePublished">2024-03-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/03/02/AssetBundle%E7%9A%84%E4%BD%BF%E7%94%A8/">关于资源加载这件事情</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>我们按顺序谈谈Unity资源加载的前世今生。</p>
+<p>1.入门阶段-》编辑器时期</p>
+<p>在我刚开始学Unity的时候，只会将资源拖动到场景中使用。</p>
+<p>这种方式决定了我们只能在编辑阶段加载资源，很快我们就会遇到一个需求。</p>
+<p>我希望能够在代码运行的时候，也能够加载资源。</p>
+<p>由于这个需求，我们就会开始接触Unity原生的资源加载方式Resource</p>
+<p>2.初级阶段-》Resource</p>
+<p>首先，我们需要把资源放到Resource文件夹下，为什么？</p>
+<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240302231729.png"></p>
+<p>因为构建项目的时候，只有Resource目录下的文件合并成一个序列化文件，然后加载时读取。</p>
+<p>此时，就可以在代码里面使用Resource加载其目录下的资源了。</p>
+<p>但是，接下来会遇到不少问题，比如</p>
+<p>1.当我们的项目越来越大的时候，资源也日渐多了起来，打出的游戏本地越来越大。</p>
+<p>2.Resource这种加载方式是只读的，因而在游戏打包后，我们无法对Resource文件夹的内容进行修改。</p>
+<p>因而就有了AssetBundle这个解决方案。</p>
+<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240302232219.png"></p>
+<p>3.中级阶段-》AB包</p>
+<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240302222647.png"></p>
+<p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240302233219.png"></p>
+<p>有着上面的对比，现在的商业游戏基本上都使用AB包来解决资源的问题。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/03/02/AssetBundle%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="clu3qbmmv0000dguc1lvi8gx6" data-title="关于资源加载这件事情" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-关于资源加载这件事情" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/03/02/%E5%85%B3%E4%BA%8E%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E8%BF%99%E4%BB%B6%E4%BA%8B%E6%83%85/" class="article-date">
+  <time class="dt-published" datetime="2024-03-02T14:26:35.000Z" itemprop="datePublished">2024-03-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/03/02/%E5%85%B3%E4%BA%8E%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E8%BF%99%E4%BB%B6%E4%BA%8B%E6%83%85/">关于AssetBundle</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="https://raw.githubusercontent.com/ctnilpp/updateImage/main/20240302222647.png"></p>
+<p>总的来说，AB包，就是Unity提供的一个资源管理方案，可以把游戏资源进行打包，然后在游戏运行时加载。</p>
+<p>那么如果没有AB包，我们之前游戏的资源是如何管理的呢？</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/03/02/%E5%85%B3%E4%BA%8E%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E8%BF%99%E4%BB%B6%E4%BA%8B%E6%83%85/" data-id="clu3qbmn40007dgucb2dp018i" data-title="关于AssetBundle" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -491,6 +933,11 @@
 
   
 
+
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
 
 </section>
         
@@ -521,23 +968,23 @@
       <ul>
         
           <li>
-            <a href="/2024/03/01/%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E6%9B%B4%E6%96%B0/">如何进行编辑器的更新</a>
+            <a href="/2024/03/22/QFramework%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0/">QFramework架构学习</a>
           </li>
         
           <li>
-            <a href="/2024/03/01/%E5%88%9B%E5%BB%BA%E6%8A%80%E8%83%BD%E7%BC%96%E8%BE%91%E5%99%A8/">创建技能编辑器</a>
+            <a href="/2024/03/16/AB%E8%B5%84%E6%BA%90%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/">AB资源框架学习</a>
           </li>
         
           <li>
-            <a href="/2024/02/29/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8AB%E5%8C%85/">为什么要用AB包?</a>
+            <a href="/2024/03/16/unity%E7%BC%96%E8%BE%91%E5%99%A8%E5%AD%A6%E4%B9%A0/">unity编辑器学习</a>
           </li>
         
           <li>
-            <a href="/2024/02/29/UI%E7%9B%B8%E6%9C%BA%E8%A2%AB%E4%B8%BB%E7%9B%B8%E6%9C%BA%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98/">UI相机被主相机覆盖问题</a>
+            <a href="/2024/03/16/Odin%E4%BD%BF%E7%94%A8/">Odin使用</a>
           </li>
         
           <li>
-            <a href="/2024/02/27/%E5%AE%B9%E5%99%A8%E4%B8%8E%E7%9B%98%E5%AD%90/">容器与盘子</a>
+            <a href="/2024/03/14/UI%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/">UI框架学习个人笔记</a>
           </li>
         
       </ul>

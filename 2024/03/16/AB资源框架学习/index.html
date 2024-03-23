@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>AB资源框架学习 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="什么是AB包？  ​	   功能一览  打包策略的认识  A与B依赖C 如果不处理会出现冗余，也就是A和B中都有C 办法：通过增加配置，使得A,B在加载的时候先去检查C是否已经加载，从而使得C只加载一次 为什么要用引用计数的办法？ 比如这里的C，如果内存中还有A和B，那计数就是2， 只有计数变成0的时候，我们才去卸载C 打包依赖图  比如LoginWindow依赖于LoginTextures， 当">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AB资源框架学习">
+<meta property="og:url" content="http://example.com/2024/03/16/AB%E8%B5%84%E6%BA%90%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="什么是AB包？  ​	   功能一览  打包策略的认识  A与B依赖C 如果不处理会出现冗余，也就是A和B中都有C 办法：通过增加配置，使得A,B在加载的时候先去检查C是否已经加载，从而使得C只加载一次 为什么要用引用计数的办法？ 比如这里的C，如果内存中还有A和B，那计数就是2， 只有计数变成0的时候，我们才去卸载C 打包依赖图  比如LoginWindow依赖于LoginTextures， 当">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240318125423964.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240318130901154.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240318131232402.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316222758963.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316222825083.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316223114403.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316223446999.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316223749653.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317145805268.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317150217255.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317151602874.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317151733811.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317152402641.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317152427680.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317214951826.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215009972.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215111005.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215130753.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215139722.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215529444.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215659203.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215902699.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215945595.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317220035510.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317220149543.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317220558793.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317220656404.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317220914676.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317220958571.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221027641.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221206706.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221409622.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221448313.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221606364.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221750735.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221844836.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221859956.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221905265.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317154324938.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317155336408.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317155700852.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317160504164.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317161047778.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317175214032.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317175227957.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319145522989.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319145653459.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319145709114.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319145822680.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319150020481.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319150639331.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319150953328.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319151158571.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319151419372.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319152045486.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319152220233.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319152436310.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317230510330.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317230612135.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319153230500.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154304576.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154402201.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154439792.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154539269.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154605690.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154652575.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154751792.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319155012377.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319155136649.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319220209813.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317232110222.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320200118701.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320200146114.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320200551825.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320201140592.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320201318858.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320201503939.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317232710237.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317233623812.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317233831430.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320201755824.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320115511690.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320115548256.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320165811792.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320180828629.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320180841790.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320181659103.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320181739479.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320182748236.png">
+<meta property="article:published_time" content="2024-03-16T14:27:37.000Z">
+<meta property="article:modified_time" content="2024-03-20T12:18:12.246Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240318125423964.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-AB资源框架学习" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/03/16/AB%E8%B5%84%E6%BA%90%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/" class="article-date">
+  <time class="dt-published" datetime="2024-03-16T14:27:37.000Z" itemprop="datePublished">2024-03-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      AB资源框架学习
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>什么是AB包？</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240318125423964.png" alt="image-20240318125423964"></p>
+<p>​	</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240318130901154.png" alt="image-20240318130901154"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240318131232402.png" alt="image-20240318131232402"></p>
+<p>功能一览</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316222758963.png" alt="image-20240316222758963"></p>
+<p>打包策略的认识</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316222825083.png" alt="image-20240316222825083"></p>
+<p>A与B依赖C</p>
+<p>如果不处理会出现冗余，也就是A和B中都有C</p>
+<p>办法：通过增加配置，使得A,B在加载的时候先去检查C是否已经加载，从而使得C只加载一次</p>
+<p>为什么要用引用计数的办法？</p>
+<p>比如这里的C，如果内存中还有A和B，那计数就是2，</p>
+<p>只有计数变成0的时候，我们才去卸载C</p>
+<p>打包依赖图</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316223114403.png" alt="image-20240316223114403"></p>
+<p>比如LoginWindow依赖于LoginTextures，</p>
+<p>当我们切换场景的时候，LoginWindow预制体销毁，同时内存中加载了LoginTextures，如果是一张大图，那就占内存，比如一张2048x2048的图片，可能就会占5MB，那就很恐怖了，因而我们就要把LoginTextures的AB包给卸载掉，让我们的游戏有更多的运行内存</p>
+<p>策略二</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316223446999.png" alt="image-20240316223446999"></p>
+<p>有顺序的打包</p>
+<p>图片-》特效-》预制体</p>
+<p>原因是他们一般是包含关系，我们打包应该从小到大</p>
+<p>预制体包含特效包含图片。</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240316223749653.png" alt="image-20240316223749653"></p>
+<p>为什么打包要分AB和热更？</p>
+<p>AB可以内嵌，而热更需要发公告和清单，还有热更的版本号</p>
+<p>打包所有文件夹</p>
+<h4 id="解决重名问题"><a href="#解决重名问题" class="headerlink" title="解决重名问题"></a>解决重名问题</h4><p>由于多模块打包工具，考虑到多模块问题，并不能只用AB包的名字作为路径名，需要加上模块</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317145805268.png" alt="image-20240317145805268"></p>
+<p>直接用自动生成的模块枚举就可以了</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317150217255.png" alt="image-20240317150217255"></p>
+<p>在Mac平台上可能路径是“\”，所以要进行一下替换</p>
+<p>搜索GUID并用GUID来获取所有预制体</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317151602874.png" alt="image-20240317151602874"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317151733811.png" alt="image-20240317151733811"></p>
+<p>这个是很重要的函数，它是解决AB包冗余的一个重要函数，所有AB包在打入的时候都需要统一进行重复检查</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317152402641.png" alt="image-20240317152402641"></p>
+<p>这个能修改unity内ABName</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317152427680.png" alt="image-20240317152427680"></p>
+<p>为什么要做AB包的配置？</p>
+<p>方便查看导出的AB包信息</p>
+<p>打AB包的代码理解</p>
+<p>路径为 一个父目录 比如 TestTexture</p>
+<p>然后子目录为文件夹 比如 Amiya</p>
+<p>接着Amiya文件夹下有图片</p>
+<p>这样，打出的包就是</p>
+<p>首先是AB包名，由模块_文件夹名组成</p>
+<p>比如我定义的模块名为Texture <img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317214951826.png" alt="image-20240317214951826"></p>
+<p>那么输出的包名就是 <img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215009972.png" alt="image-20240317215009972"></p>
+<p>然后会尝试是否重复加载了路径</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215111005.png" alt="image-20240317215111005"></p>
+<p>如果没有的话，就会添加<img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215130753.png" alt="image-20240317215130753"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215139722.png" alt="image-20240317215139722"></p>
+<p>然后检查包名是否为第一次添加，如果是，则新建一个list，</p>
+<p>否则，就在旧的list里面去添加这个新的ab包。</p>
+<p>然后来到最后一个，修改AB包的名字</p>
+<p>上一步会得到这样的字典 &lt;AB包名， AB包里的文件路径列表&gt;，如下图</p>
+<p>Key就是AB包名，Value是AB包里的所有文件路径列表</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215529444.png" alt="image-20240317215529444"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215659203.png" alt="image-20240317215659203"></p>
+<p>通过遍历，我们会把所有的文件都打入该AB包中</p>
+<p>接着，我们要写一个AB的配置，方便我们查看打出来的AB包包含什么</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215902699.png" alt="image-20240317215902699"></p>
+<p>通过该方法，可以得到我们上一步设置了的所有AB包</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317215945595.png" alt="image-20240317215945595"></p>
+<p>遍历，然后加到字典中去（字典为&lt;文件路径名， AB包名&gt;）</p>
+<p>而后，就是遍历字典</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317220035510.png" alt="image-20240317220035510"></p>
+<p>只要不是.cs后缀的文件，我们就创建一个AB包info对象，然后把路径，包名，资源名，crc，以及依赖，生成出来。</p>
+<p>关于依赖如何生成为配置表，我们要GetDependencies获取依赖的所有文件，接着，通过遍历这些文件，去得到这些文件需要用到的AB包，从而把依赖到的所有文件的AB包添加到依赖列表中。（这样的话，在我们实际加载这个资源的时候，会可以遍历这个依赖列表，从而得知我们需要加载哪些AB包。）（这里有个疑问，如果打入的预制体，我们没有相应的依赖，会发生什么呢？）</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317220149543.png" alt="image-20240317220149543"></p>
+<p>最后，就是用unity的api，打出我们设定的ab包</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317220558793.png" alt="image-20240317220558793"></p>
+<p>而且这里，我们就可以进行配置了</p>
+<p>然后unity api会生成一些多余的.manifest文件，我们要进行清理</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317220656404.png" alt="image-20240317220656404"></p>
+<p>清理完后，我们进行加密</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317220914676.png" alt="image-20240317220914676"></p>
+<p>如果是热更模式，我们需要生成热更文件</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317220958571.png" alt="image-20240317220958571"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221027641.png" alt="image-20240317221027641"></p>
+<p>就是把我们上面用api生成的ab包文件，全部复制到热更新的路径之中</p>
+<p>并且热更新，还会生成一个清单出来</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221206706.png" alt="image-20240317221206706"></p>
+<p>总体来说，就是获取我们复制后的文件，然后这些文件生成为HotFileInfo，使用md5加密，而且计算大小，接着放到gotAssetPatch这个对象里</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221409622.png" alt="image-20240317221409622"></p>
+<p>这个对象，把这些热更的ab包数据保存起来，以及赋值本次的补丁版本</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221448313.png" alt="image-20240317221448313"></p>
+<p>然后这些所有的版本，统一放到HotAssetsManifest里面去保存，这样我们就能够获得很多个版本的HotAssetsPatch，</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221606364.png" alt="image-20240317221606364"></p>
+<p>最后，把整个对象写成json文件，并且以二进制的方式，写到热更资源文件夹中</p>
+<p>AB包结果</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221750735.png" alt="image-20240317221750735"></p>
+<p>热更结果</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221844836.png" alt="image-20240317221844836"></p>
+<p>热更的配置表</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221859956.png" alt="image-20240317221859956"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317221905265.png" alt="image-20240317221905265"></p>
+<p>CRC是什么？</p>
+<p>将路径转为CRC，方便之后校验</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317154324938.png" alt="image-20240317154324938"></p>
+<p>AssetImporter用的是相对路径，因此进行一下替换</p>
+<p>注意用到 Editor的文件需要放到Editor文件夹下</p>
+<p>但是疑问（那我们做资源框架，岂不是在打包的时候需要到Editor文件夹生成相应的文件咯？）</p>
+<p>为什么不用Unity原生生成的AB包配置信息？</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317155336408.png" alt="image-20240317155336408"></p>
+<p>因为需要我们自己做一个解析，没有我们自己生成一个json来的方便，而且也没办法自定义</p>
+<p>加密AB包 AES</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317155700852.png" alt="image-20240317155700852"></p>
+<p>AB的资源内嵌是什么？</p>
+<p>就是说把AB包放到stream文件夹里面，第一次安装的时候就释放到本地</p>
+<p>其实就是把资源分成 基础 和 DLC模块，一般来说，我们希望用户尽早进入游戏界面内，因而像登录界面资源，大厅资源，都应该作为资源内嵌，而游戏功能，附加的可选择下载的资源，就应该用热更的方式，在用户希望下载的时候再进行下载。</p>
+<p>内嵌资源的代码编写</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317160504164.png" alt="image-20240317160504164"></p>
+<p>内嵌信息，为什么要进行校验，因为如果没有热更过，说明资源是内嵌的，那么校验不一致，覆盖即可，而如果热更过，那就说明热更覆盖了，就不应该再进行资源的内嵌了。</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317161047778.png" alt="image-20240317161047778"></p>
+<p>这个参数是为了让json格式分行，不加就是单行，不方便查看</p>
+<p>热更资源清单和热更资源补丁</p>
+<p>为了防止新的出问题，要分一个稳定版和最新版的。（也就是版本回退，因而需要有版本号）</p>
+<p>多模块，多线程资源下载</p>
+<p>单线程下载</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317175214032.png" alt="image-20240317175214032"></p>
+<p>多线程下载</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317175227957.png" alt="image-20240317175227957"></p>
+<h2 id="下载模块编写"><a href="#下载模块编写" class="headerlink" title="下载模块编写"></a>下载模块编写</h2><h4 id="热更资源模块"><a href="#热更资源模块" class="headerlink" title="热更资源模块"></a>热更资源模块</h4><p>检测资源版本</p>
+<p>首先要先下载资源热更清单</p>
+<p>下载地址</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319145522989.png" alt="image-20240319145522989"></p>
+<p>就是这个</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319145653459.png" alt="image-20240319145653459"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319145709114.png" alt="image-20240319145709114"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319145822680.png" alt="image-20240319145822680"></p>
+<p>完成之后，就会有两个文件</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319150020481.png" alt="image-20240319150020481"></p>
+<p>一个是从服务器下载的最新的</p>
+<p>另一个则是本地的，我们会将这两个文件进行比对，从而得知本地的版本</p>
+<h4 id="判断是否需要热更"><a href="#判断是否需要热更" class="headerlink" title="判断是否需要热更"></a>判断是否需要热更</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319150639331.png" alt="image-20240319150639331"></p>
+<h4 id="计算热更包的大小"><a href="#计算热更包的大小" class="headerlink" title="计算热更包的大小"></a>计算热更包的大小</h4><p>本地热更AB包存放路径</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319150953328.png" alt="image-20240319150953328"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319151158571.png" alt="image-20240319151158571"></p>
+<p>一个数组存所有下载的列表</p>
+<p>另一个存需要下载的列表，因为本地有的文件可能不存在，也可能与服务端的不一致，相当于增量更新</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319151419372.png" alt="image-20240319151419372"></p>
+<p>热更的分层，就是分成三层，然后最大的模块可以有多个</p>
+<h4 id="下载队列"><a href="#下载队列" class="headerlink" title="下载队列"></a>下载队列</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319152045486.png" alt="image-20240319152045486"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319152220233.png" alt="image-20240319152220233"></p>
+<p>优先下载配置文件，因为会动态加载，那么配置文件第一时间被下载好后就会被加载，方便管理AB包信息</p>
+<h4 id="资源下载器"><a href="#资源下载器" class="headerlink" title="资源下载器"></a>资源下载器</h4><p>下载器参数一览</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319152436310.png" alt="image-20240319152436310"></p>
+<p>用的是上面已经处理好的热更信息，然后初始化下载器，进行热更文件的下载</p>
+<p>开始下载热更资源</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317230510330.png" alt="image-20240317230510330"></p>
+<p>首先，进行版本的检查</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317230612135.png" alt="image-20240317230612135"></p>
+<h4 id="线程文件"><a href="#线程文件" class="headerlink" title="线程文件"></a>线程文件</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319153230500.png" alt="image-20240319153230500"></p>
+<p>核心代码</p>
+<p>用HttpWebRequest的Get方法获取到文件字节流</p>
+<p>接着会存到response里面，然后创建本地文件流Filestream</p>
+<p>接着，获得response的文件流后，开始读取</p>
+<p>先从response的流里读取512个字节，然后写到filestream里面</p>
+<p>这样就可以把资源服务器上的二进制文件写到本地中。</p>
+<h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154304576.png" alt="image-20240319154304576"></p>
+<p>根据线程数量，取队列里的东西，开始下载</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154402201.png" alt="image-20240319154402201"></p>
+<p>创建线程，并且开始下载</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154439792.png" alt="image-20240319154439792"></p>
+<p>无论线程下载成功还是失败，都要把回调放到主线程之中，让主线程来执行（一是方便管理，二是在unity中，其他线程无法访问unity的内存）</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154539269.png" alt="image-20240319154539269"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154605690.png" alt="image-20240319154605690"></p>
+<p>StartDownload就是线程开始开启下载，每个线程用Task去Run，然后</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154652575.png" alt="image-20240319154652575"></p>
+<p>无论成功失败，都会触发回调，并把下载的热更文件信息放入回调中</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319154751792.png" alt="image-20240319154751792"></p>
+<p>记得上锁，因为是多线程回调，需要保证不在同一时刻操作队列</p>
+<p>同时，主线程更新接口，把参数放到回调之中执行。</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319155012377.png" alt="image-20240319155012377"></p>
+<p>同时，这里执行的函数，就是外部传过来的下载成功的函数，从而外部根据下载的信息，调整显示</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319155136649.png" alt="image-20240319155136649"></p>
+<p>如果下载的是配置文件，立马进行加载</p>
+<p>否则，就传给HotAssetsManager中，进行处理</p>
+<h4 id="多模块下载"><a href="#多模块下载" class="headerlink" title="多模块下载"></a>多模块下载</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240319220209813.png" alt="image-20240319220209813"></p>
+<p>不热更的话，会直接把资源内嵌，方便在本地进行debug调试</p>
+<h3 id="资源热更流程"><a href="#资源热更流程" class="headerlink" title="资源热更流程"></a>资源热更流程</h3><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317232110222.png" alt="image-20240317232110222"></p>
+<h3 id="资源解压"><a href="#资源解压" class="headerlink" title="资源解压"></a>资源解压</h3><h4 id="流程-1"><a href="#流程-1" class="headerlink" title="流程"></a>流程</h4><p>热更前，先解压内嵌资源</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320200118701.png" alt="image-20240320200118701"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320200146114.png" alt="image-20240320200146114"></p>
+<p>计算是否需要解压资源，如果要的话，开始把资源解压到本地文件夹中</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320200551825.png" alt="image-20240320200551825"></p>
+<p>从resource文件夹中加载模块包的信息</p>
+<p>然后如果符合条件，就解压到本地中，而且计算解压的大小（单位是M，所以除以1024）</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320201140592.png" alt="image-20240320201140592"></p>
+<p>用unityWebRequest本地读取stream文件内的ab包文件</p>
+<p>然后写到本地文件夹中。</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320201318858.png" alt="image-20240320201318858"></p>
+<p>解压完后，看热更模式，如果是热更模式，连接服务器检查热更版本</p>
+<p>否则直接进入游戏</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320201503939.png" alt="image-20240320201503939"></p>
+<p>看是否进行热更，不是的话直接热更结束，不下载</p>
+<h3 id="AB依赖性和内存引用计数"><a href="#AB依赖性和内存引用计数" class="headerlink" title="AB依赖性和内存引用计数"></a>AB依赖性和内存引用计数<img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317232710237.png" alt="image-20240317232710237"></h3><p>引用计数</p>
+<p>释放资源</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317233623812.png" alt="image-20240317233623812"></p>
+<p>两种释放策略</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240317233831430.png" alt="image-20240317233831430"></p>
+<h3 id="资源对象池"><a href="#资源对象池" class="headerlink" title="资源对象池"></a>资源对象池</h3><h4 id="对象池类"><a href="#对象池类" class="headerlink" title="对象池类"></a>对象池类</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320201755824.png" alt="image-20240320201755824"></p>
+<p>池子初始化的时候，就放入类，注意，是无参的！</p>
+<h4 id="资源加载"><a href="#资源加载" class="headerlink" title="资源加载"></a>资源加载</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320115511690.png" alt="image-20240320115511690"></p>
+<p>在编辑器模式下，用的是AssetDatabase加载</p>
+<p>而脱离了编辑器模式，就要用AB包去加载</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320115548256.png" alt="image-20240320115548256"></p>
+<h4 id="资源内嵌"><a href="#资源内嵌" class="headerlink" title="资源内嵌"></a>资源内嵌</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320165811792.png" alt="image-20240320165811792"></p>
+<p>会把打出的AB包放到StreamingAssets中，随着打包一起出去。</p>
+<p>StreamingAssets内的文件在安卓上是可读的</p>
+<h4 id="框架流程理解"><a href="#框架流程理解" class="headerlink" title="框架流程理解"></a>框架流程理解</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320180828629.png" alt="image-20240320180828629"></p>
+<p>热更完成后进行回调</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320180841790.png" alt="image-20240320180841790"></p>
+<p>在线程中完成配置的加载，并在加载完后调用main脚本的StartGame函数</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320181659103.png" alt="image-20240320181659103"></p>
+<p>如果是内嵌的情况下，会从内嵌解压了的文件夹中读取配置，然后把资源的信息放到AB字典里。</p>
+<p>下面是解压了后的AB包所在位置，这里的解压是从内嵌资源那边放过来的。？</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320181739479.png" alt="image-20240320181739479"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240320182748236.png" alt="image-20240320182748236"></p>
+<p>在加载的时候，检查是否是热更路径，不是的话，就用内嵌路径加载</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/03/16/AB%E8%B5%84%E6%BA%90%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/" data-id="clu3qbmmz0001dguchuqv4pgp" data-title="AB资源框架学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/03/22/QFramework%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          QFramework架构学习
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/03/16/unity%E7%BC%96%E8%BE%91%E5%99%A8%E5%AD%A6%E4%B9%A0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">unity编辑器学习</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/03/22/QFramework%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0/">QFramework架构学习</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/16/AB%E8%B5%84%E6%BA%90%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/">AB资源框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/16/unity%E7%BC%96%E8%BE%91%E5%99%A8%E5%AD%A6%E4%B9%A0/">unity编辑器学习</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/16/Odin%E4%BD%BF%E7%94%A8/">Odin使用</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/14/UI%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/">UI框架学习个人笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

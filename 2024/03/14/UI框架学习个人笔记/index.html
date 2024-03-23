@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>UI框架学习个人笔记 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="为什么要单独弄一个窗口的生命周期？如果用Unity原生的生命周期会有什么问题吗？ 为什么会有单遮和叠遮？ 概念： UI 遮罩系统是项目中很重要的一个功能，市面上普遍存在的两种遮罩模式：一种是单遮模式，一种是叠遮模式。 单遮模式：无论打开多少界面，遮罩只有一层。(市面上常用的遮罩模式，但是更复杂，问题也更多。) 叠遮模式：即每一个界面都有一层遮罩，打开的界面越多，遮罩越黑。 而有时候美术或者策划希望">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UI框架学习个人笔记">
+<meta property="og:url" content="http://example.com/2024/03/14/UI%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="为什么要单独弄一个窗口的生命周期？如果用Unity原生的生命周期会有什么问题吗？ 为什么会有单遮和叠遮？ 概念： UI 遮罩系统是项目中很重要的一个功能，市面上普遍存在的两种遮罩模式：一种是单遮模式，一种是叠遮模式。 单遮模式：无论打开多少界面，遮罩只有一层。(市面上常用的遮罩模式，但是更复杂，问题也更多。) 叠遮模式：即每一个界面都有一层遮罩，打开的界面越多，遮罩越黑。 而有时候美术或者策划希望">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.fantsida.com/assets/files/2024-01-07/1704609819-353240-image.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240314181807649.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240314181904212.png">
+<meta property="og:image" content="c:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240314181919390.png">
+<meta property="article:published_time" content="2024-03-14T02:33:40.000Z">
+<meta property="article:modified_time" content="2024-03-15T13:33:29.161Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.fantsida.com/assets/files/2024-01-07/1704609819-353240-image.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-UI框架学习个人笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/03/14/UI%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2024-03-14T02:33:40.000Z" itemprop="datePublished">2024-03-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      UI框架学习个人笔记
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>为什么要单独弄一个窗口的生命周期？如果用Unity原生的生命周期会有什么问题吗？</p>
+<p>为什么会有单遮和叠遮？</p>
+<p>概念：</p>
+<p>UI 遮罩系统是项目中很重要的一个功能，市面上普遍存在的两种遮罩模式：一种是<strong>单遮模式</strong>，一种是<strong>叠遮模式</strong>。</p>
+<p><strong>单遮模式</strong>：无论打开多少界面，<em>遮罩只有一层</em>。(市面上常用的遮罩模式，但是更复杂，问题也更多。)</p>
+<p><strong>叠遮模式</strong>：即<em>每一个界面都有一层遮罩</em>，打开的界面越多，遮罩越黑。</p>
+<p>而有时候美术或者策划希望在打开多个窗口时，玩家还能隐约看到背景里的窗口，此时就需要用到单遮模式了，因为叠遮模式是多个界面的叠加，界面越多，遮罩越黑。</p>
+<p>默认情况下，UGUI本身就是叠遮的，多个mask可以叠加到一起。</p>
+<p>而为了实现单遮，我们的思路是：</p>
+<p>在初始化，显示，隐藏，销毁UI的时候，对所有可见的UI进行单遮设置。</p>
+<p>算法：</p>
+<p>1.将所有UI的遮罩层关闭（细节就是将UIMask层上的CanvasGroup设置为0）</p>
+<p>2.遍历出所有可见UI中，sortingOrder最高的UI，如果sortingOrder一样，则取节点层级最高（比较GetSiblingIndex()）</p>
+<p>3.如果遍历有结果，就把这个结果的遮罩层打开。</p>
+<p>为什么需要层级系统？</p>
+<p>因为界面上有可能放置模型或者特效，而模型和特效的层级是没有定义的，分为层级系统，就可以定义挂载页面上的模型的层级，这样做到不同页面，模型或者特效显示的顺序，防止上层的界面被下层的界面的模型或者特效穿透。</p>
+<p><img src="https://www.fantsida.com/assets/files/2024-01-07/1704609819-353240-image.png" alt="img"></p>
+<p>每一个模板的父物体都是一个 <code>Canvas</code>，因为 <code>Canvas</code> 本身是不需要 <code>DrawCall</code> 的？为啥？</p>
+<p>自动化代码生成</p>
+<p>首先遍历gameobject上的字段，如果名字中带有”[“和”]”，说明是功能组件，然后解析字符串获取功能字符串和名字字符串，存到editor对象中。然后因为用的GetChild(i)获取，递归遍历完全部就可以了。</p>
+<p>自动化代码的增量生成问题</p>
+<p>周期函数和个人的Api函数都是在第一次生成好的，后续不用改，因而要改的是UI组件事件，所以思路是在UI组件事件中插入新的函数</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240314181807649.png" alt="image-20240314181807649"></p>
+<p>第一种，是用Find去寻找并生成</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240314181904212.png" alt="image-20240314181904212"></p>
+<p>第二种，则是挂载一个脚本在GameObject上</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20240314181919390.png" alt="image-20240314181919390"></p>
+<p>为什么要有堆栈系统？</p>
+<p>因为希望界面如同栈一般，关闭一个，会弹回上一个出来，原生的unity并不支持这个功能，如果不实现一个栈，又在管理上非常麻烦，不应该由界面单独做逻辑，而应该让UIModule模块统一管理进行UI堆栈的管理。</p>
+<p>堆栈系统的设计是这样的。</p>
+<p>首先整个项目有两个显示界面的方式，一种是普通，一种是堆栈。</p>
+<p>两者走的函数不一样，然后前者的ui界面之间是没有关联的。</p>
+<p>然后是后者，后者的话，是会维护一个队列来管理界面，同时会设计一个状态，表示堆栈里的ui是否弹完了。</p>
+<p>然后堆栈界面生成后，会压到队列里，并且把堆栈是否开启的状态打开。</p>
+<p>在这个界面隐藏或者销毁的时候，要测试是否有堆栈界面，堆栈状态是否开启，当前隐藏的界面是否是堆栈界面。</p>
+<p>假如是的话，就拿队列的界面显示，然后步骤继续是上面这样。直到所有堆栈界面被弹完，才把状态设置为关闭。</p>
+<p>同时放入堆栈的弹窗，还可以用Action放入参数，在弹窗被弹出的时候执行。</p>
+<p>还有，这里我想，如果中途有普通的界面要被打开，也就是在界面初始化或者打开的时候，也要检查一下当前堆栈状态是否打开，如果是的话，就应该把这个也放到队列之中，这样就不会说这个新的界面突然出现，而是跟着顺序打开完。当然，这里是否要这样做可以看需求。</p>
+<p>为什么要用UIModule统一管理动画？</p>
+<p>UI性能优化</p>
+<p>加载对象的消耗，比如</p>
+<p>1.资源加载，例如图片加载，自身加载的同时还加载图集，</p>
+<p>2.引用其他对象，还要加载其他对象上的资源，而且一般是递归引用，这样的话就会造成卡顿。</p>
+<p>3.CPU计算网格数据，顶点信息，也就是我们常说的DrawCall</p>
+<p>解决的方法有拆分，但是如果界面或者对象无法再进行拆分了，这个时候就得考虑使用预加载的方法</p>
+<p>哪些操作会引起网格重建？</p>
+<p>图片，Gaemobject,Canvas的SetActive（所有子物体都会重建）, Text的赋值，颜色的修改，调整图片和文字透明度</p>
+<p>UI的缩放不引起，CanvasGroup不引起</p>
+<p>为什么不能频繁SetActive?</p>
+<p>有哪些方法可以提高UI的性能</p>
+<ol>
+<li>Canvasgroup修改透明度</li>
+<li>组件的SetActive改成将大小变成零(但是如果其上仍可以接触的话，，，不过也可以在函数里关掉) （这个可以用一个代理类写拓展方法去做。）</li>
+</ol>
+<p>为什么禁用RaycastTarget可以提高性能？</p>
+<ol>
+<li><strong>减少射线投射检测</strong></li>
+<li><strong>减少事件触发的计算</strong>: </li>
+<li><strong>优化渲染批次</strong>:</li>
+</ol>
+<p>如何进行UI的Batch优化？</p>
+<ol>
+<li><strong>注意UI排列的顺序</strong>同组件以及其材质一样，会进行合批，如果中间隔着其他组件，则会打断合批 因此引发 -》使用相同材质贴图的UI尽量保持深度相同，这样对合批算法友好，速度快。</li>
+<li>修改Image的Color属性，原理是修改顶点色，会引起网格Rebatch，同时触发Canvas.SendWillRenderCanvases。好处在于修改顶点色材质不变，没有额外DC。修改shader颜色不会重绘，材质不变，没有Rebatch。-》也就是说，可以用shader进行颜色修改，而不是用unity的color组件</li>
+<li>少用Mask，用RectMask2D代替。</li>
+<li>TextMeshPro代替原生text。</li>
+</ol>
+<p>通用优化策略</p>
+<ul>
+<li>血条、飘字等实时刷新的注意性能，容易出现瓶颈。可以减少可见数量，降低远处刷新频率等。</li>
+<li>gameobject隐藏方法，enable有很大消耗，底层处理很多东西，移动坐标或是设置layer。</li>
+<li>简化UI结构，空的节点越少越好，层级越少越好，不用的节点及时删除。因为UI一般修改较多，很容易把不显示的隐藏，依然有一定消耗。</li>
+<li>界面上少挂粒子特效，动态加载。</li>
+</ul>
+<p>UI优化的经验</p>
+<p>常驻的就是主界面，战斗相关飘字血条等，这部分是要注意的，并没有太好的优化方法，因为数量在那摆着，一般血条飘字这种会限制数量，用插件等方法，也算是比较成熟的解决方案了。再一个就是功能UI，一般这种都是全屏的，也就是说同时并没有多少其他消耗，UI占用多些问题也不大，当然做的时候还是会加限制。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/03/14/UI%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/" data-id="clu3qbmn20005dguccah23hmm" data-title="UI框架学习个人笔记" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/03/16/Odin%E4%BD%BF%E7%94%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Odin使用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/03/07/%E5%9B%9E%E5%90%88%E6%B5%81%E7%A8%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">回合流程</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/03/22/QFramework%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0/">QFramework架构学习</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/16/AB%E8%B5%84%E6%BA%90%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/">AB资源框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/16/unity%E7%BC%96%E8%BE%91%E5%99%A8%E5%AD%A6%E4%B9%A0/">unity编辑器学习</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/16/Odin%E4%BD%BF%E7%94%A8/">Odin使用</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/14/UI%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/">UI框架学习个人笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
